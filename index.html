@@ -142,12 +142,20 @@
         .brand-mark {
             display: grid;
             place-items: center;
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
+            overflow: hidden;
             border-radius: var(--radius);
             color: #fff;
-            background: linear-gradient(145deg, var(--green), var(--gold));
-            box-shadow: 0 14px 30px rgba(6, 78, 59, 0.22);
+            background: linear-gradient(145deg, #171412, #064e3b);
+            box-shadow: 0 14px 30px rgba(6, 78, 59, 0.24);
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
         }
 
         .nav-links {
@@ -1068,7 +1076,7 @@
     <div class="site-shell">
         <nav class="nav">
             <a class="brand" href="#top" aria-label="أمل العيسى">
-                <span class="brand-mark"><i class="fa-solid fa-a"></i></span>
+                <span class="brand-mark"><img src="logo.webp" alt="شعار أمل العيسى"></span>
                 <span>أمل العيسى</span>
             </a>
             <button class="nav-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false">
@@ -1194,7 +1202,6 @@
                         <span class="kicker">نتائج الحملات الإعلانية</span>
                         <h2>نتائج مرئية تقرأها العين بسرعة</h2>
                     </div>
-                    <p>تم تنظيم لوحات النتائج في كروت واضحة لتظهر القصص قبل/بعد، المنصات، والتحليلات.</p>
                 </div>
 
                 <div class="campaign-grid">
@@ -1455,22 +1462,57 @@
                             <a class="btn" href="#top"><i class="fa-solid fa-arrow-up"></i> العودة للأعلى</a>
                         </div>
                     </div>
-                    <form onsubmit="event.preventDefault(); alert('تم استلام طلبك بنجاح');">
-                        <input type="text" placeholder="الاسم الكامل" required>
-                        <input type="email" placeholder="البريد الإلكتروني" required>
-                        <select required>
-                            <option value="">نوع الخدمة</option>
-                            <option>حملات إعلانية</option>
-                            <option>إنشاء متجر إلكتروني</option>
-                            <option>إدارة سوشال ميديا</option>
-                            <option>هوية بصرية وشعارات</option>
-                        </select>
-                        <textarea placeholder="اكتب نبذة قصيرة عن مشروعك"></textarea>
+                    <form class="project-form" novalidate>
+                        <div class="form-message" role="status" aria-live="polite">
+                            <i class="fa-solid fa-check"></i>
+                            <span>
+                                <strong>وصلتنا تفاصيلك بكل لطف</strong>
+                                <span>شكراً لك. سنراجع طلبك ونرتب موعد الاستشارة المقترح بأقرب وقت.</span>
+                            </span>
+                        </div>
+
+                        <div class="field">
+                            <label for="client-name">الاسم الكامل</label>
+                            <input id="client-name" name="name" type="text" placeholder="مثلاً: سارة أحمد" autocomplete="name" required minlength="3">
+                            <span class="field-error"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="client-email">البريد الإلكتروني</label>
+                            <input id="client-email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
+                            <span class="field-error"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="consultation-date">تاريخ الاستشارة المناسب</label>
+                            <input id="consultation-date" name="consultation_date" type="date" required>
+                            <span class="field-error"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="service-type">نوع الخدمة</label>
+                            <select id="service-type" name="service" required>
+                                <option value="">اختاري نوع الخدمة</option>
+                                <option>حملات إعلانية</option>
+                                <option>إنشاء متجر إلكتروني</option>
+                                <option>إدارة سوشال ميديا</option>
+                                <option>هوية بصرية وشعارات</option>
+                            </select>
+                            <span class="field-error"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="project-details">نبذة عن المشروع</label>
+                            <textarea id="project-details" name="message" placeholder="اكتب نبذة قصيرة عن مشروعك، هدفك، أو التحدي الحالي" required minlength="12"></textarea>
+                            <span class="field-error"></span>
+                        </div>
+
                         <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> إرسال الطلب</button>
                     </form>
                 </div>
             </div>
         </section>
+
     </div>
 
     <div class="lightbox" id="image-lightbox" aria-hidden="true">
@@ -1506,6 +1548,72 @@
                 navToggle.setAttribute("aria-expanded", "false");
                 navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
             });
+        });
+
+        const projectForm = document.querySelector(".project-form");
+        const consultationDate = document.getElementById("consultation-date");
+        const formMessage = projectForm.querySelector(".form-message");
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayValue = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0")
+        ].join("-");
+        consultationDate.min = todayValue;
+
+        function fieldErrorText(input) {
+            if (input.validity.valueMissing) {
+                return "هذا الحقل مطلوب.";
+            }
+            if (input.type === "email" && input.validity.typeMismatch) {
+                return "اكتب بريد إلكتروني صحيح.";
+            }
+            if (input.validity.tooShort) {
+                return `اكتب على الأقل ${input.minLength} أحرف.`;
+            }
+            if (input.type === "date" && (input.validity.rangeUnderflow || input.value)) {
+                const selectedDate = new Date(`${input.value}T00:00:00`);
+                if (selectedDate < today) return "اختاري تاريخ اليوم أو تاريخ قادم.";
+            }
+            return "";
+        }
+
+        function validateField(input) {
+            const field = input.closest(".field");
+            const error = field.querySelector(".field-error");
+            const message = fieldErrorText(input);
+            field.classList.toggle("is-invalid", Boolean(message));
+            error.textContent = message;
+            return !message;
+        }
+
+        projectForm.querySelectorAll("input, select, textarea").forEach((input) => {
+            input.addEventListener("blur", () => validateField(input));
+            input.addEventListener("input", () => {
+                if (input.closest(".field").classList.contains("is-invalid")) {
+                    validateField(input);
+                }
+            });
+        });
+
+        projectForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            formMessage.classList.remove("is-visible");
+            const fields = [...projectForm.querySelectorAll("input, select, textarea")];
+            const isValid = fields.map(validateField).every(Boolean);
+
+            if (!isValid) {
+                const firstInvalid = projectForm.querySelector(".field.is-invalid input, .field.is-invalid select, .field.is-invalid textarea");
+                firstInvalid?.focus();
+                return;
+            }
+
+            formMessage.classList.add("is-visible");
+            projectForm.reset();
+            consultationDate.min = todayValue;
+            formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
         });
 
         const heroCanvas = document.getElementById("hero-web");
@@ -1621,6 +1729,9 @@
             let dragStarted = false;
             let startX = 0;
             let startScrollLeft = 0;
+            let autoSlideTimer = null;
+            let resumeTimer = null;
+            let suppressClickUntil = 0;
 
             function scrollAmount() {
                 const card = track.querySelector(".work-card");
@@ -1635,21 +1746,53 @@
                 next.disabled = track.scrollLeft >= max;
             }
 
+            function pauseAutoSlide() {
+                clearInterval(autoSlideTimer);
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(startAutoSlide, 4500);
+            }
+
+            function autoSlide() {
+                const max = track.scrollWidth - track.clientWidth - 2;
+                if (max <= 2) return;
+
+                if (track.scrollLeft >= max) {
+                    track.scrollTo({ left: 0, behavior: "smooth" });
+                    return;
+                }
+
+                track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+            }
+
+            function startAutoSlide() {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = setInterval(autoSlide, 3200);
+            }
+
             prev.addEventListener("click", () => {
+                pauseAutoSlide();
                 track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
             });
 
             next.addEventListener("click", () => {
+                pauseAutoSlide();
                 track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
             });
 
             track.addEventListener("scroll", updateButtons, { passive: true });
             window.addEventListener("resize", updateButtons);
+            shell.addEventListener("mouseenter", () => {
+                clearInterval(autoSlideTimer);
+                clearTimeout(resumeTimer);
+            });
+            shell.addEventListener("mouseleave", startAutoSlide);
 
             track.addEventListener("pointerdown", (event) => {
                 if (event.button !== 0) return;
+                pauseAutoSlide();
                 isDragging = true;
                 dragStarted = false;
+                track.dataset.dragged = "false";
                 startX = event.clientX;
                 startScrollLeft = track.scrollLeft;
                 track.classList.add("is-dragging");
@@ -1674,9 +1817,11 @@
                     track.releasePointerCapture(event.pointerId);
                 }
                 if (dragStarted) {
+                    suppressClickUntil = Date.now() + 220;
+                    track.dataset.suppressClickUntil = String(suppressClickUntil);
                     setTimeout(() => {
                         track.dataset.dragged = "false";
-                    }, 0);
+                    }, 240);
                 }
             }
 
@@ -1688,22 +1833,35 @@
             });
 
             updateButtons();
+            startAutoSlide();
         });
 
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImage = lightbox.querySelector("img");
         const lightboxClose = lightbox.querySelector(".lightbox-close");
-        const zoomableImages = ".work-card img, .campaign-card img, .testimonial-card img, .hero-card img, .logo-item img";
+        const zoomableItems = ".work-card, .campaign-card, .testimonial-card, .hero-card, .logo-item";
 
-        document.querySelectorAll(zoomableImages).forEach((image) => {
-            image.addEventListener("click", (event) => {
+        function openLightboxFromImage(image) {
+            lightboxImage.src = image.currentSrc || image.src;
+            lightboxImage.alt = image.alt || "صورة من الأعمال";
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        }
+
+        document.querySelectorAll(`${zoomableItems} img`).forEach((image) => {
+            image.setAttribute("draggable", "false");
+            image.addEventListener("dragstart", (event) => event.preventDefault());
+        });
+
+        document.querySelectorAll(zoomableItems).forEach((item) => {
+            item.addEventListener("click", (event) => {
                 const track = event.currentTarget.closest(".gallery-track");
-                if (track?.dataset.dragged === "true") return;
-                lightboxImage.src = image.currentSrc || image.src;
-                lightboxImage.alt = image.alt || "صورة من الأعمال";
-                lightbox.classList.add("is-open");
-                lightbox.setAttribute("aria-hidden", "false");
-                document.body.style.overflow = "hidden";
+                const suppressUntil = Number(track?.dataset.suppressClickUntil || 0);
+                if (track?.dataset.dragged === "true" || Date.now() < suppressUntil) return;
+
+                const image = event.currentTarget.querySelector("img");
+                if (image) openLightboxFromImage(image);
             });
         });
 
