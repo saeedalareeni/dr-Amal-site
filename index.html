@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أمل العيسى | بورتفوليو تسويق رقمي</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --paper: #fbfaf6;
+            --paper-2: #f4efe7;
+            --ink: #171412;
+            --muted: #6f6256;
+            --green: #064e3b;
+            --green-2: #0f766e;
+            --gold: #b45309;
+            --amber: #f59e0b;
+            --rose: #be3455;
+            --blue: #2563eb;
+            --line: rgba(23, 20, 18, 0.11);
+            --glass: rgba(255, 255, 255, 0.76);
+            --shadow: 0 24px 80px rgba(43, 34, 25, 0.16);
+            --radius: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--paper);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Tajawal", Arial, sans-serif;
+            color: var(--ink);
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 8% 12%, rgba(190, 52, 85, 0.10), transparent 28rem),
+                radial-gradient(circle at 88% 18%, rgba(6, 78, 59, 0.11), transparent 30rem),
+                linear-gradient(135deg, var(--paper), #fffdf8 42%, var(--paper-2));
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.42;
+            background-image:
+                linear-gradient(rgba(23, 20, 18, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(23, 20, 18, 0.035) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.2));
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; }
+        button, input, select, textarea { font: inherit; }
+
+        #hero-web {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.34;
+        }
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: grid;
+            place-items: center;
+            background: var(--paper);
+            transition: opacity 0.6s ease;
+        }
+
+        .loader-mark {
+            width: 72px;
+            height: 72px;
+            border: 1px solid rgba(6, 78, 59, 0.18);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 300;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rose), var(--gold), var(--green-2));
+            box-shadow: 0 0 22px rgba(180, 83, 9, 0.4);
+        }
+
+        .site-shell {
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            z-index: 250;
+            width: min(1120px, calc(100% - 28px));
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.72);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 14px 50px rgba(23, 20, 18, 0.10);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            color: var(--green);
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius);
+            color: #fff;
+            background: linear-gradient(145deg, var(--green), var(--gold));
+            box-shadow: 0 14px 30px rgba(6, 78, 59, 0.22);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            padding: 9px 12px;
+            border-radius: var(--radius);
+            color: #3e352f;
+            font-size: 0.94rem;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+            background: rgba(6, 78, 59, 0.08);
+        }
+
+        .nav-toggle {
+            display: none;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(6, 78, 59, 0.13);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.78);
+            cursor: pointer;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: grid;
+            align-items: center;
+            padding: 126px 6vw 72px;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+            gap: 36px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding: 8px 12px;
+            border: 1px solid rgba(180, 83, 9, 0.18);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        h1 {
+            max-width: 760px;
+            font-size: clamp(3rem, 6vw, 6.4rem);
+            line-height: 0.92;
+            letter-spacing: 0;
+            color: var(--ink);
+        }
+
+        h1 span {
+            display: inline-block;
+            color: var(--green);
+        }
+
+        .hero-copy {
+            margin: 24px 0 30px;
+            max-width: 680px;
+            color: #51463e;
+            font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+            line-height: 1.85;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 48px;
+            padding: 12px 18px;
+            border: 0;
+            border-radius: var(--radius);
+            color: #fff;
+            background: var(--green);
+            box-shadow: 0 16px 34px rgba(6, 78, 59, 0.25);
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: var(--gold);
+            box-shadow: 0 18px 38px rgba(180, 83, 9, 0.25);
+        }
+
+        .btn.secondary {
+            color: var(--green);
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(6, 78, 59, 0.14);
+            box-shadow: none;
+        }
+
+        .hero-board {
+            position: relative;
+            min-height: 560px;
+            perspective: 1300px;
+        }
+
+        .showcase-stack {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+        }
+
+        .hero-card {
+            position: absolute;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.82);
+            border-radius: var(--radius);
+            background: var(--glass);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .hero-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-card.big {
+            inset: 12px 44px 88px 0;
+            transform: rotateY(-12deg) rotateZ(1deg);
+        }
+
+        .hero-card.small {
+            width: 45%;
+            height: 42%;
+            left: 0;
+            bottom: 20px;
+            transform: translateZ(90px) rotateZ(-3deg);
+        }
+
+        .hero-card.metric {
+            right: 0;
+            bottom: 0;
+            width: 54%;
+            min-height: 164px;
+            padding: 22px;
+            transform: translateZ(130px);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .metric-item {
+            padding: 14px;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.82);
+            border: 1px solid var(--line);
+        }
+
+        .metric-item strong {
+            display: block;
+            color: var(--green);
+            font-size: 1.45rem;
+            line-height: 1;
+        }
+
+        .metric-item span {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        section.content-section {
+            position: relative;
+            padding: 86px 6vw;
+        }
+
+        .section-inner {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(280px, 0.52fr);
+            gap: 26px;
+            align-items: end;
+            margin-bottom: 28px;
+        }
+
+        .kicker {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: var(--gold);
+            font-weight: 900;
+        }
+
+        h2 {
+            color: var(--green);
+            font-size: clamp(2rem, 4vw, 4rem);
+            line-height: 1.05;
+            letter-spacing: 0;
+        }
+
+        .section-head p,
+        .section-copy {
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.85;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .service-card,
+        .download-card,
+        .audio-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.78);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.72);
+            box-shadow: 0 18px 60px rgba(23, 20, 18, 0.08);
+            backdrop-filter: blur(16px);
+        }
+
+        .service-card {
+            min-height: 238px;
+            padding: 22px;
+        }
+
+        .service-card::after,
+        .download-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 18px 0 18px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--rose));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.32s ease;
+        }
+
+        .service-card:hover::after,
+        .download-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            border-radius: var(--radius);
+            color: #fff;
+            background: var(--green);
+        }
+
+        .service-card:nth-child(2) .icon { background: var(--rose); }
+        .service-card:nth-child(3) .icon { background: var(--gold); }
+        .service-card:nth-child(4) .icon { background: var(--blue); }
+
+        h3 {
+            margin-bottom: 10px;
+            color: var(--ink);
+            font-size: 1.35rem;
+            line-height: 1.25;
+        }
+
+        .service-card p,
+        .audio-card p,
+        .download-card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .gallery-shell {
+            position: relative;
+            padding-inline: 58px;
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            padding: 8px 2px 26px;
+            direction: ltr;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .gallery-track.is-dragging {
+            cursor: grabbing;
+            scroll-snap-type: none;
+        }
+
+        .gallery-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            z-index: 5;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.82);
+            border-radius: var(--radius);
+            color: #fff;
+            background: rgba(6, 78, 59, 0.86);
+            box-shadow: 0 16px 34px rgba(6, 78, 59, 0.20);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transform: translateY(-50%);
+            transition: transform 0.22s ease, background 0.22s ease, opacity 0.22s ease;
+        }
+
+        .gallery-nav:hover {
+            background: var(--gold);
+            transform: translateY(-50%) scale(1.04);
+        }
+
+        .gallery-nav:disabled {
+            opacity: 0.36;
+            cursor: default;
+            transform: translateY(-50%);
+        }
+
+        .gallery-nav.prev {
+            right: 0;
+        }
+
+        .gallery-nav.next {
+            left: 0;
+        }
+
+        .work-card {
+            position: relative;
+            flex: 0 0 clamp(270px, 31vw, 390px);
+            aspect-ratio: 0.78;
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: #fff;
+            border: 1px solid rgba(255,255,255,0.84);
+            box-shadow: 0 22px 70px rgba(23, 20, 18, 0.13);
+            scroll-snap-align: start;
+            direction: rtl;
+        }
+
+        .work-card.landscape { aspect-ratio: 1.08; }
+        .work-card.tall { aspect-ratio: 0.64; }
+
+        .work-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: zoom-in;
+            transition: transform 0.65s ease, filter 0.65s ease;
+        }
+
+        .work-card:hover img {
+            transform: scale(1.055);
+            filter: saturate(1.1) contrast(1.03);
+        }
+
+        .work-card figcaption {
+            position: absolute;
+            inset: auto 0 0 0;
+            padding: 58px 18px 18px;
+            color: #fff;
+            background: linear-gradient(to top, rgba(6, 45, 35, 0.94), rgba(6, 45, 35, 0));
+        }
+
+        .work-card span {
+            display: inline-flex;
+            margin-bottom: 8px;
+            padding: 5px 9px;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.16);
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        .work-card h3 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .campaign-card {
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(255,255,255,0.82);
+            box-shadow: 0 18px 56px rgba(23, 20, 18, 0.11);
+        }
+
+        .campaign-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            background: #fff;
+            cursor: zoom-in;
+        }
+
+        .campaign-body {
+            padding: 18px;
+        }
+
+        .campaign-body span {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 0.86rem;
+        }
+
+        .logo-band {
+            width: 100%;
+            overflow: hidden;
+            border-block: 1px solid var(--line);
+            background: rgba(255,255,255,0.46);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo-marquee {
+            display: flex;
+            width: max-content;
+            gap: 14px;
+            padding: 18px 0;
+            animation: marquee 36s linear infinite;
+        }
+
+        .logo-item {
+            display: grid;
+            place-items: center;
+            width: 156px;
+            height: 94px;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #fff;
+        }
+
+        .logo-item img {
+            max-width: 100%;
+            max-height: 70px;
+            object-fit: contain;
+            cursor: zoom-in;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(50%); }
+        }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.55fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .testimonial-card {
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: #fff;
+            border: 1px solid rgba(255,255,255,0.84);
+            box-shadow: 0 18px 54px rgba(23, 20, 18, 0.10);
+        }
+
+        .testimonial-card img {
+            width: 100%;
+            height: 330px;
+            object-fit: cover;
+            object-position: top;
+            cursor: zoom-in;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+            background: rgba(12, 10, 8, 0.86);
+            backdrop-filter: blur(18px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.24s ease;
+        }
+
+        .lightbox.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox img {
+            max-width: min(1120px, 94vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: var(--radius);
+            box-shadow: 0 30px 90px rgba(0,0,0,0.36);
+            background: #fff;
+            transform: scale(0.96);
+            transition: transform 0.24s ease;
+        }
+
+        .lightbox.is-open img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: var(--radius);
+            color: #fff;
+            background: rgba(255,255,255,0.12);
+            cursor: pointer;
+        }
+
+        .audio-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .audio-card {
+            padding: 16px;
+        }
+
+        .audio-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--green);
+            font-weight: 900;
+        }
+
+        audio {
+            width: 100%;
+            height: 42px;
+            accent-color: var(--green);
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .download-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 22px;
+        }
+
+        .download-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 54px;
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius);
+            color: #fff;
+            background: var(--rose);
+        }
+
+        .download-card:nth-child(2) .download-icon {
+            background: var(--green-2);
+        }
+
+        .contact-panel {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+            gap: 22px;
+            align-items: stretch;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.84);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.72);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .contact-note {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+            padding: 12px;
+        }
+
+        .contact-note p {
+            margin-top: 18px;
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: 1.12rem;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .field label {
+            color: var(--green);
+            font-size: 0.92rem;
+            font-weight: 900;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 13px 14px;
+            color: var(--ink);
+            background: rgba(255,255,255,0.86);
+            outline: none;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        textarea { resize: vertical; min-height: 112px; }
+
+        .field.is-invalid input,
+        .field.is-invalid select,
+        .field.is-invalid textarea {
+            border-color: rgba(190, 52, 85, 0.65);
+            box-shadow: 0 0 0 4px rgba(190, 52, 85, 0.09);
+        }
+
+        .field-error {
+            min-height: 18px;
+            color: var(--rose);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: rgba(6, 78, 59, 0.42);
+            box-shadow: 0 0 0 4px rgba(6, 78, 59, 0.08);
+        }
+
+        .form-message {
+            display: none;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            border: 1px solid rgba(6, 78, 59, 0.16);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: linear-gradient(135deg, rgba(236,253,245,0.96), rgba(255,255,255,0.84));
+        }
+
+        .form-message.is-visible {
+            display: flex;
+            animation: messageIn 0.45s ease both;
+        }
+
+        .form-message i {
+            display: grid;
+            place-items: center;
+            flex: 0 0 38px;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius);
+            color: #fff;
+            background: var(--green);
+        }
+
+        .form-message strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .form-message span {
+            display: block;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px);
+        }
+
+        .floaty {
+            animation: floaty 7s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+            0%, 100% { transform: translateY(0) rotateZ(0); }
+            50% { transform: translateY(-14px) rotateZ(-1deg); }
+        }
+
+        @media (max-width: 980px) {
+            .nav {
+                position: sticky;
+                top: 0;
+                left: auto;
+                width: 100%;
+                transform: none;
+                border-radius: 0;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                padding: 10px 16px;
+            }
+
+            .nav-toggle {
+                display: grid;
+                margin-inline-start: auto;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                grid-template-columns: 1fr;
+                gap: 6px;
+                padding-top: 10px;
+                border-top: 1px solid var(--line);
+            }
+
+            .nav.is-open .nav-links {
+                display: grid;
+            }
+
+            .nav-links a {
+                padding: 12px;
+                background: rgba(255,255,255,0.64);
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 54px;
+                padding-bottom: 56px;
+            }
+
+            .hero-grid,
+            .section-head,
+            .split-grid,
+            .contact-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-board {
+                min-height: 460px;
+            }
+
+            .service-grid,
+            .campaign-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero,
+            section.content-section {
+                padding-inline: 16px;
+            }
+
+            h1 {
+                font-size: clamp(2.45rem, 12vw, 3.45rem);
+                line-height: 1;
+            }
+
+            h2 {
+                font-size: clamp(1.8rem, 9vw, 2.55rem);
+            }
+
+            .hero-copy {
+                margin: 18px 0 22px;
+                font-size: 1rem;
+                line-height: 1.75;
+            }
+
+            .hero-actions,
+            .download-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .hero-board {
+                min-height: 340px;
+            }
+
+            .gallery-shell {
+                padding-inline: 40px;
+            }
+
+            .gallery-nav {
+                width: 38px;
+                height: 38px;
+            }
+
+            .hero-card.big { inset: 0 22px 82px 0; }
+            .hero-card.small { width: 54%; height: 38%; }
+            .hero-card.metric { width: 62%; padding: 14px; }
+
+            .work-card {
+                flex-basis: min(76vw, 310px);
+            }
+
+            .work-card.landscape {
+                aspect-ratio: 0.9;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .metric-item {
+                padding: 10px;
+            }
+
+            .service-grid,
+            .campaign-grid,
+            .testimonials-grid,
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campaign-card img,
+            .testimonial-card img {
+                height: 280px;
+            }
+
+            .contact-panel {
+                padding: 18px;
+            }
+
+            .contact-note {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader-mark"></div>
+    </div>
+
+    <div class="progress-bar" id="progress"></div>
+
+    <div class="site-shell">
+        <nav class="nav">
+            <a class="brand" href="#top" aria-label="أمل العيسى">
+                <span class="brand-mark"><i class="fa-solid fa-a"></i></span>
+                <span>أمل العيسى</span>
+            </a>
+            <button class="nav-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="nav-links" aria-label="روابط الموقع">
+                <a href="#work">الأعمال</a>
+                <a href="#campaigns">نتائج الحملات</a>
+                <a href="#stores">المتاجر</a>
+                <a href="#clients">العملاء</a>
+                <a href="#freebies">ملفات مجانية</a>
+            </div>
+        </nav>
+
+        <header class="hero" id="top">
+            <canvas id="hero-web" aria-hidden="true"></canvas>
+            <div class="hero-grid">
+                <div class="hero-copybox reveal">
+                    <span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> تسويق رقمي مبني على نتائج حقيقية</span>
+                    <h1>بورتفوليو يحكي <span>نمو العلامات</span> بالصورة والرقم</h1>
+                    <p class="hero-copy">هنا ستجد أعمال أمل العيسى كما هي في ملفات المشروع: حملات إعلانية، متاجر إلكترونية، إدارة سوشال ميديا، آراء عملاء، تسجيلات صوتية، شعارات، وملفات مجانية جاهزة للتحميل.</p>
+                    <div class="hero-actions">
+                        <a class="btn" href="#work"><i class="fa-solid fa-border-all"></i> مشاهدة الأعمال</a>
+                        <a class="btn secondary" href="#freebies"><i class="fa-solid fa-download"></i> الملفات المجانية</a>
+                    </div>
+                </div>
+
+                <div class="hero-board reveal" aria-hidden="true">
+                    <div class="showcase-stack floaty">
+                        <figure class="hero-card big">
+                            <img src="نتائج الحملات الاعلانية/حملة الورد.png" alt="">
+                        </figure>
+                        <figure class="hero-card small">
+                            <img src="انشاء متاجر الكترونية/متجر ميك اب.png" alt="">
+                        </figure>
+                        <div class="hero-card metric">
+                            <div class="metric-grid">
+                                <div class="metric-item"><strong>11</strong><span>لوحات نتائج حملات</span></div>
+                                <div class="metric-item"><strong>9</strong><span>نماذج سوشال ميديا</span></div>
+                                <div class="metric-item"><strong>5</strong><span>متاجر إلكترونية</span></div>
+                                <div class="metric-item"><strong>40+</strong><span>شعارات عملاء</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-section" id="services">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">من الفكرة إلى الأثر</span>
+                        <h2>خدمات واضحة، ومخرجات قابلة للعرض</h2>
+                    </div>
+                    <p>كل خدمة مدعومة بنماذج فعلية من الأعمال، حتى تظهر جودة التنفيذ وثقة العملاء من أول نظرة.</p>
+                </div>
+
+                <div class="service-grid">
+                    <article class="service-card reveal">
+                        <span class="icon"><i class="fa-solid fa-bullhorn"></i></span>
+                        <h3>الحملات الإعلانية</h3>
+                        <p>عرض نتائج سناب، Google Analytics، ولقطات قبل/بعد لقياس التحسن.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <span class="icon"><i class="fa-solid fa-store"></i></span>
+                        <h3>إنشاء المتاجر</h3>
+                        <p>نماذج متاجر إلكترونية جاهزة للعرض بصور كبيرة ومعلومات مختصرة.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <span class="icon"><i class="fa-solid fa-hashtag"></i></span>
+                        <h3>سوشال ميديا</h3>
+                        <p>تصاميم محتوى لحسابات مختلفة مع تصفح أفقي سريع ومريح.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <span class="icon"><i class="fa-solid fa-pen-nib"></i></span>
+                        <h3>هوية وشعارات</h3>
+                        <p>جدار شعارات متحرك يبرز ثقة العملاء وتنوع القطاعات.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="work">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">المشاريع</span>
+                        <h2>لقطات مختارة من الأعمال المنفذة</h2>
+                    </div>
+                    <p>مجموعة مختارة تبرز تنوع التنفيذ بين الهوية، المحتوى، وتجارب العملاء.</p>
+                </div>
+
+                <div class="gallery-shell reveal">
+                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="gallery-track">
+                        <figure class="work-card reveal landscape">
+                            <img src="المشاريع/نوفا.png" alt="مشروع نوفا">
+                            <figcaption><span>مشروع</span><h3>نوفا</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal landscape">
+                            <img src="المشاريع/نوفا ايفنت.webp" alt="نوفا ايفنت">
+                            <figcaption><span>فعاليات</span><h3>نوفا إيفنت</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal">
+                            <img src="المشاريع/f3fe32da-850a-4816-b005-9f9c7fe8099a.JPG" alt="مشروع تسويقي">
+                            <figcaption><span>تنفيذ</span><h3>حملة بصرية</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal">
+                            <img src="المشاريع/8a1391e7-1e47-47c8-89b2-e56d1a313222.JPG" alt="مشروع عميل">
+                            <figcaption><span>تجربة عميل</span><h3>محتوى ميداني</h3></figcaption>
+                        </figure>
+                    </div>
+                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="campaigns">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">نتائج الحملات الإعلانية</span>
+                        <h2>نتائج مرئية تقرأها العين بسرعة</h2>
+                    </div>
+                    <p>تم تنظيم لوحات النتائج في كروت واضحة لتظهر القصص قبل/بعد، المنصات، والتحليلات.</p>
+                </div>
+
+                <div class="campaign-grid">
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/الورد قبل.png" alt="نتائج الورد قبل">
+                        <div class="campaign-body"><span>قبل</span><h3>الورد</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/الورد بعد.png" alt="نتائج الورد بعد">
+                        <div class="campaign-body"><span>بعد</span><h3>تحسن حملة الورد</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/حملة الورد.png" alt="حملة الورد">
+                        <div class="campaign-body"><span>حملة</span><h3>أداء حملة الورد</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/دهليز قبل.png" alt="دهليز قبل">
+                        <div class="campaign-body"><span>قبل</span><h3>دهليز</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/دهليز بعد.png" alt="دهليز بعد">
+                        <div class="campaign-body"><span>بعد</span><h3>نتائج دهليز</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/جوجل انالتكس.png" alt="Google Analytics">
+                        <div class="campaign-body"><span>تحليل</span><h3>Google Analytics</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/سناب شات.png" alt="سناب شات">
+                        <div class="campaign-body"><span>منصة</span><h3>Snapchat Ads</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/عطور.jpeg" alt="نتائج عطور">
+                        <div class="campaign-body"><span>قطاع</span><h3>العطور</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/Sleepnice(1).png" alt="Sleepnice">
+                        <div class="campaign-body"><span>عميل</span><h3>Sleepnice</h3></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="stores">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">إنشاء متاجر إلكترونية</span>
+                        <h2>واجهات متجرية جاهزة للإقناع</h2>
+                    </div>
+                    <p>نماذج متجرية تركز على وضوح الهوية وتجربة الشراء وطريقة عرض المنتجات.</p>
+                </div>
+
+                <div class="gallery-shell reveal">
+                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="gallery-track">
+                        <figure class="work-card reveal tall">
+                            <img src="انشاء متاجر الكترونية/متجر ميك اب.png" alt="متجر ميك اب">
+                            <figcaption><span>متجر</span><h3>متجر ميك أب</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal tall">
+                            <img src="انشاء متاجر الكترونية/متجر متاع.png" alt="متجر متاع">
+                            <figcaption><span>متجر</span><h3>متجر متاع</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal tall">
+                            <img src="انشاء متاجر الكترونية/متجر عالطاير.png" alt="متجر عالطاير">
+                            <figcaption><span>متجر</span><h3>عالطاير</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal tall">
+                            <img src="انشاء متاجر الكترونية/سمار.png" alt="متجر سمار">
+                            <figcaption><span>متجر</span><h3>سمار</h3></figcaption>
+                        </figure>
+                        <figure class="work-card reveal tall">
+                            <img src="انشاء متاجر الكترونية/folaz.JPEG" alt="متجر folaz">
+                            <figcaption><span>متجر</span><h3>Folaz</h3></figcaption>
+                        </figure>
+                    </div>
+                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="social">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">سوشال ميديا</span>
+                        <h2>محتوى بصري يحافظ على هوية كل علامة</h2>
+                    </div>
+                    <p>تصاميم وحسابات تعكس نبرة كل علامة وتبني حضورها اليومي على المنصات.</p>
+                </div>
+
+                <div class="gallery-shell reveal">
+                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="gallery-track">
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Petcure.png" alt="Petcure"><figcaption><span>سوشال</span><h3>Petcure</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Diggipacks.png" alt="Diggipacks"><figcaption><span>سوشال</span><h3>Diggipacks</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Sleepnice.png" alt="Sleepnice"><figcaption><span>سوشال</span><h3>Sleepnice</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/كيد فيرست سوشال ميديا.png" alt="كيد فيرست"><figcaption><span>سوشال</span><h3>كيد فيرست</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/نوفا ايفنت سوشال ميديا.png" alt="نوفا ايفنت"><figcaption><span>سوشال</span><h3>نوفا إيفنت</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/انشاء متجر NEE Makeup Milano.png" alt="NEE Makeup Milano"><figcaption><span>متجر وسوشال</span><h3>NEE Makeup Milano</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/1سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/2سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
+                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/3سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
+                    </div>
+                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="clients">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">آراء العملاء والصوتيات</span>
+                        <h2>ثقة موثقة بالصورة والصوت</h2>
+                    </div>
+                    <p>لقطات آراء العملاء بجانب تسجيلات صوتية مباشرة، حتى يكون البورتفوليو قريب وحقيقي.</p>
+                </div>
+
+                <div class="split-grid">
+                    <div class="testimonials-grid">
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_9683.PNG" alt="رأي عميل"></figure>
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_1884.PNG" alt="رأي عميل"></figure>
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_1883.PNG" alt="رأي عميل"></figure>
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_1688.PNG" alt="رأي عميل"></figure>
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_1667.PNG" alt="رأي عميل"></figure>
+                        <figure class="testimonial-card reveal"><img src="اراء العملاء/IMG_0970.PNG" alt="رأي عميل"></figure>
+                    </div>
+
+                    <div class="audio-list">
+                        <article class="audio-card reveal">
+                            <div class="audio-title"><i class="fa-solid fa-volume-high"></i> تسجيل عميل 01</div>
+                            <audio controls src="صوتيات/AUDIO-2026-05-28-21-41-08.m4a"></audio>
+                        </article>
+                        <article class="audio-card reveal">
+                            <div class="audio-title"><i class="fa-solid fa-volume-high"></i> تسجيل عميل 02</div>
+                            <audio controls src="صوتيات/AUDIO-2026-05-05-05-43-16.m4a"></audio>
+                        </article>
+                        <article class="audio-card reveal">
+                            <div class="audio-title"><i class="fa-solid fa-volume-high"></i> تسجيل عميل 03</div>
+                            <audio controls src="صوتيات/AUDIO-2026-04-30-13-37-50.m4a"></audio>
+                        </article>
+                        <article class="audio-card reveal">
+                            <div class="audio-title"><i class="fa-solid fa-volume-high"></i> تسجيل عميل 04</div>
+                            <audio controls src="صوتيات/AUDIO-2026-04-20-20-31-37.m4a"></audio>
+                        </article>
+                        <article class="audio-card reveal">
+                            <div class="audio-title"><i class="fa-solid fa-volume-high"></i> تسجيل عميل 05</div>
+                            <audio controls src="صوتيات/AUDIO-2026-03-22-00-03-50.m4a"></audio>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="logos">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">لوقو العملاء</span>
+                        <h2>علامات متنوعة في قطاعات مختلفة</h2>
+                    </div>
+                    <p>نماذج شعارات وهويات بصرية لعملاء من قطاعات مختلفة، من العطور إلى الفعاليات والخدمات.</p>
+                </div>
+            </div>
+            <div class="logo-band reveal">
+                <div class="logo-marquee">
+                    <span class="logo-item"><img src="لوقو العملاء/dail.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/2000x2000.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/2000 x1000.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/1080 x 1920.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/1.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/تصميم بدون عنوان.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/الشرهان للعود .jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/WhatsApp Image 2026-04-29 at 8.47.33 PM.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/Sure-Fanni-Logo-side-1 (1).png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/Profile.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/nee.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/final logo-3.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/final logo-01.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/صفوة الجوف .png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/سليب نايس.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/سكر ولبن.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/زائر.svg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/مرايا.webp" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/كيد فيرست.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/عشاق العطور.jpeg" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/نعناع.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/هدايا جدة.avif" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/dail.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/2000x2000.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/2000 x1000.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/1080 x 1920.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/1.png" alt="شعار عميل"></span>
+                    <span class="logo-item"><img src="لوقو العملاء/تصميم بدون عنوان.png" alt="شعار عميل"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="freebies">
+            <div class="section-inner">
+                <div class="section-head reveal">
+                    <div>
+                        <span class="kicker">ملفات مجانية</span>
+                        <h2>موارد قابلة للتحميل مباشرة</h2>
+                    </div>
+                    <p>قوالب عملية تساعد على تنظيم المحتوى وتحليل الإعلانات بطريقة أوضح.</p>
+                </div>
+
+                <div class="download-grid">
+                    <a class="download-card reveal" href="ملفات مجانية/social media.xlsx" download>
+                        <span class="download-icon"><i class="fa-solid fa-table-cells-large"></i></span>
+                        <span>
+                            <h3>ملف Social Media</h3>
+                            <p>قالب لتنظيم محتوى وإدارة حسابات السوشال ميديا.</p>
+                        </span>
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                    <a class="download-card reveal" href="ملفات مجانية/Google Ads نموذج التحليل والبيانات.xlsx" download>
+                        <span class="download-icon"><i class="fa-solid fa-chart-simple"></i></span>
+                        <span>
+                            <h3>نموذج Google Ads</h3>
+                            <p>ملف تحليل وبيانات للحملات الإعلانية المدفوعة.</p>
+                        </span>
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                    <a class="download-card reveal" href="لوقو العملاء/Nilam-Arabic.pdf" target="_blank">
+                        <span class="download-icon"><i class="fa-solid fa-file-pdf"></i></span>
+                        <span>
+                            <h3>ملف هوية Nilam</h3>
+                            <p>نموذج PDF من ملفات شعارات وهوية العملاء.</p>
+                        </span>
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                    </a>
+                    <a class="download-card reveal" href="لوقو العملاء/دهليز.pdf" target="_blank">
+                        <span class="download-icon"><i class="fa-solid fa-file-pdf"></i></span>
+                        <span>
+                            <h3>ملف هوية دهليز</h3>
+                            <p>عرض إضافي للهوية البصرية من ملفات العملاء.</p>
+                        </span>
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="contact">
+            <div class="section-inner">
+                <div class="contact-panel reveal">
+                    <div class="contact-note">
+                        <div>
+                            <span class="kicker">ابدأ مشروعك</span>
+                            <h2>خلينا نحول الداتا إلى قرار نمو واضح</h2>
+                            <p>اكتب احتياجك باختصار، وسيكون من السهل تحويله إلى خطة محتوى أو حملة أو متجر جاهز للانطلاق.</p>
+                        </div>
+                        <div class="hero-actions">
+                            <a class="btn" href="#top"><i class="fa-solid fa-arrow-up"></i> العودة للأعلى</a>
+                        </div>
+                    </div>
+                    <form onsubmit="event.preventDefault(); alert('تم استلام طلبك بنجاح');">
+                        <input type="text" placeholder="الاسم الكامل" required>
+                        <input type="email" placeholder="البريد الإلكتروني" required>
+                        <select required>
+                            <option value="">نوع الخدمة</option>
+                            <option>حملات إعلانية</option>
+                            <option>إنشاء متجر إلكتروني</option>
+                            <option>إدارة سوشال ميديا</option>
+                            <option>هوية بصرية وشعارات</option>
+                        </select>
+                        <textarea placeholder="اكتب نبذة قصيرة عن مشروعك"></textarea>
+                        <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> إرسال الطلب</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="lightbox" id="image-lightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" aria-label="إغلاق الصورة"><i class="fa-solid fa-xmark"></i></button>
+        <img src="" alt="">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        const loader = document.getElementById("loader");
+        const progress = document.getElementById("progress");
+
+        window.addEventListener("load", () => {
+            loader.style.opacity = "0";
+            setTimeout(() => loader.remove(), 650);
+        });
+
+        const nav = document.querySelector(".nav");
+        const navToggle = document.querySelector(".nav-toggle");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        navToggle.addEventListener("click", () => {
+            const isOpen = nav.classList.toggle("is-open");
+            navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            navToggle.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+        });
+
+        navLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                nav.classList.remove("is-open");
+                navToggle.setAttribute("aria-expanded", "false");
+                navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            });
+        });
+
+        const heroCanvas = document.getElementById("hero-web");
+        const heroCtx = heroCanvas.getContext("2d");
+        const webNodes = [];
+        const nodeCount = 38;
+
+        function resizeHeroCanvas() {
+            const ratio = Math.min(window.devicePixelRatio || 1, 2);
+            const rect = heroCanvas.parentElement.getBoundingClientRect();
+            heroCanvas.width = rect.width * ratio;
+            heroCanvas.height = rect.height * ratio;
+            heroCanvas.style.width = `${rect.width}px`;
+            heroCanvas.style.height = `${rect.height}px`;
+            heroCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            buildHeroWeb(rect.width, rect.height);
+        }
+
+        function buildHeroWeb(width, height) {
+            webNodes.length = 0;
+            for (let i = 0; i < nodeCount; i++) {
+                webNodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    baseX: Math.random() * width,
+                    baseY: Math.random() * height,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function drawHeroWeb() {
+            requestAnimationFrame(drawHeroWeb);
+            const width = heroCanvas.clientWidth;
+            const height = heroCanvas.clientHeight;
+            const time = performance.now() * 0.0007;
+
+            heroCtx.clearRect(0, 0, width, height);
+
+            webNodes.forEach((node) => {
+                node.x = node.baseX + Math.sin(time + node.phase) * 11;
+                node.y = node.baseY + Math.cos(time * 0.9 + node.phase) * 9;
+            });
+
+            heroCtx.lineWidth = 1;
+            heroCtx.strokeStyle = "rgba(6, 78, 59, 0.13)";
+            heroCtx.fillStyle = "rgba(180, 83, 9, 0.22)";
+
+            webNodes.forEach((a, i) => {
+                for (let j = i + 1; j < webNodes.length; j++) {
+                    const b = webNodes[j];
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const distance = Math.hypot(dx, dy);
+                    if (distance < 150) {
+                        heroCtx.globalAlpha = (1 - distance / 150) * 0.46;
+                        heroCtx.beginPath();
+                        heroCtx.moveTo(a.x, a.y);
+                        heroCtx.lineTo(b.x, b.y);
+                        heroCtx.stroke();
+                    }
+                }
+            });
+
+            heroCtx.globalAlpha = 0.55;
+            webNodes.forEach((node) => {
+                heroCtx.beginPath();
+                heroCtx.arc(node.x, node.y, 1.6, 0, Math.PI * 2);
+                heroCtx.fill();
+            });
+        }
+
+        window.addEventListener("resize", () => {
+            resizeHeroCanvas();
+        });
+
+        resizeHeroCanvas();
+        drawHeroWeb();
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray(".reveal").forEach((item, index) => {
+            gsap.to(item, {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: "power3.out",
+                delay: (index % 4) * 0.04,
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 86%"
+                }
+            });
+        });
+
+        gsap.utils.toArray(".work-card, .campaign-card, .testimonial-card, .service-card, .download-card").forEach((card) => {
+            card.addEventListener("mousemove", (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                gsap.to(card, { rotateY: x * -6, rotateX: y * 5, y: -5, duration: 0.35, ease: "power2.out" });
+            });
+            card.addEventListener("mouseleave", () => {
+                gsap.to(card, { rotateY: 0, rotateX: 0, y: 0, duration: 0.45, ease: "power2.out" });
+            });
+        });
+
+        document.querySelectorAll(".gallery-shell").forEach((shell) => {
+            const track = shell.querySelector(".gallery-track");
+            const prev = shell.querySelector(".gallery-nav.prev");
+            const next = shell.querySelector(".gallery-nav.next");
+            let isDragging = false;
+            let dragStarted = false;
+            let startX = 0;
+            let startScrollLeft = 0;
+
+            function scrollAmount() {
+                const card = track.querySelector(".work-card");
+                if (!card) return track.clientWidth * 0.8;
+                const gap = parseFloat(getComputedStyle(track).gap) || 16;
+                return card.getBoundingClientRect().width + gap;
+            }
+
+            function updateButtons() {
+                const max = track.scrollWidth - track.clientWidth - 2;
+                prev.disabled = track.scrollLeft <= 2;
+                next.disabled = track.scrollLeft >= max;
+            }
+
+            prev.addEventListener("click", () => {
+                track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+            });
+
+            next.addEventListener("click", () => {
+                track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+            });
+
+            track.addEventListener("scroll", updateButtons, { passive: true });
+            window.addEventListener("resize", updateButtons);
+
+            track.addEventListener("pointerdown", (event) => {
+                if (event.button !== 0) return;
+                isDragging = true;
+                dragStarted = false;
+                startX = event.clientX;
+                startScrollLeft = track.scrollLeft;
+                track.classList.add("is-dragging");
+                track.setPointerCapture(event.pointerId);
+            });
+
+            track.addEventListener("pointermove", (event) => {
+                if (!isDragging) return;
+                const delta = event.clientX - startX;
+                if (Math.abs(delta) > 5) {
+                    dragStarted = true;
+                    track.dataset.dragged = "true";
+                }
+                track.scrollLeft = startScrollLeft - delta;
+            });
+
+            function endDrag(event) {
+                if (!isDragging) return;
+                isDragging = false;
+                track.classList.remove("is-dragging");
+                if (track.hasPointerCapture(event.pointerId)) {
+                    track.releasePointerCapture(event.pointerId);
+                }
+                if (dragStarted) {
+                    setTimeout(() => {
+                        track.dataset.dragged = "false";
+                    }, 0);
+                }
+            }
+
+            track.addEventListener("pointerup", endDrag);
+            track.addEventListener("pointercancel", endDrag);
+            track.addEventListener("lostpointercapture", () => {
+                isDragging = false;
+                track.classList.remove("is-dragging");
+            });
+
+            updateButtons();
+        });
+
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImage = lightbox.querySelector("img");
+        const lightboxClose = lightbox.querySelector(".lightbox-close");
+        const zoomableImages = ".work-card img, .campaign-card img, .testimonial-card img, .hero-card img, .logo-item img";
+
+        document.querySelectorAll(zoomableImages).forEach((image) => {
+            image.addEventListener("click", (event) => {
+                const track = event.currentTarget.closest(".gallery-track");
+                if (track?.dataset.dragged === "true") return;
+                lightboxImage.src = image.currentSrc || image.src;
+                lightboxImage.alt = image.alt || "صورة من الأعمال";
+                lightbox.classList.add("is-open");
+                lightbox.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove("is-open");
+            lightbox.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+            setTimeout(() => {
+                if (!lightbox.classList.contains("is-open")) {
+                    lightboxImage.src = "";
+                }
+            }, 250);
+        }
+
+        lightboxClose.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) closeLightbox();
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+                closeLightbox();
+            }
+        });
+
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                progress.style.width = `${self.progress * 100}%`;
+            }
+        });
+    </script>
+</body>
+</html>
