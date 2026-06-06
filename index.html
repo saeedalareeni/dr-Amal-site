@@ -196,7 +196,67 @@
             display: grid;
             align-items: center;
             padding: 126px 6vw 72px;
+            scroll-margin-top: 96px;
             overflow: hidden;
+        }
+
+        .hero-kinetic-words {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+            perspective: 1200px;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+        }
+
+        .kinetic-word {
+            position: absolute;
+            top: var(--top);
+            right: var(--right);
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+        }
+
+        .kinetic-word-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 8px 13px;
+            border: 1px solid rgba(255,255,255,0.78);
+            border-radius: var(--radius);
+            color: var(--green);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.74), rgba(244,239,231,0.36)),
+                linear-gradient(90deg, rgba(6, 78, 59, 0.10), rgba(180, 83, 9, 0.12));
+            box-shadow: 0 18px 44px rgba(23, 20, 18, 0.10);
+            backdrop-filter: blur(16px);
+            font-size: var(--size);
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            opacity: 0.58;
+            transform: translate3d(0, 0, 0) rotate(var(--tilt)) scale(0.96);
+            animation: wordFly var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            will-change: transform, opacity;
+        }
+
+        .kinetic-word:nth-child(3n) .kinetic-word-label {
+            color: var(--gold);
+            border-color: rgba(180, 83, 9, 0.20);
+        }
+
+        .kinetic-word:nth-child(4n) .kinetic-word-label {
+            color: var(--rose);
+            border-color: rgba(190, 52, 85, 0.18);
+        }
+
+        .kinetic-word:nth-child(5n) .kinetic-word-label {
+            color: var(--blue);
+            border-color: rgba(37, 99, 235, 0.14);
         }
 
         .hero-grid {
@@ -361,6 +421,7 @@
         section.content-section {
             position: relative;
             padding: 86px 6vw;
+            scroll-margin-top: 96px;
         }
 
         .section-inner {
@@ -399,7 +460,7 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 14px;
         }
 
@@ -450,8 +511,6 @@
 
         .service-card:nth-child(2) .icon { background: var(--rose); }
         .service-card:nth-child(3) .icon { background: var(--gold); }
-        .service-card:nth-child(4) .icon { background: var(--blue); }
-
         h3 {
             margin-bottom: 10px;
             color: var(--ink);
@@ -584,6 +643,247 @@
             color: #fff;
         }
 
+        .project-story {
+            position: relative;
+            min-height: 390svh;
+            margin-top: 8px;
+        }
+
+        .project-stage {
+            position: sticky;
+            top: 92px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
+            gap: 26px;
+            align-items: center;
+            min-height: calc(100svh - 118px);
+            padding-block: 18px;
+        }
+
+        .project-media-stack {
+            position: relative;
+            min-height: min(58svh, 560px);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.84);
+            border-radius: var(--radius);
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.92), rgba(244,239,231,0.58)),
+                repeating-linear-gradient(90deg, rgba(6, 78, 59, 0.045) 0 1px, transparent 1px 68px);
+            box-shadow: 0 26px 76px rgba(23, 20, 18, 0.12);
+            isolation: isolate;
+        }
+
+        .project-media {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: clamp(14px, 2vw, 24px);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(28px) scale(0.96);
+            filter: blur(10px) saturate(0.86);
+            transition: opacity 0.55s ease, transform 0.65s cubic-bezier(.2,.8,.2,1), filter 0.55s ease;
+        }
+
+        .project-media.is-active {
+            z-index: 2;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+            filter: blur(0) saturate(1);
+        }
+
+        .project-media img {
+            width: 100%;
+            height: 100%;
+            max-height: min(52svh, 510px);
+            object-fit: contain;
+            border-radius: calc(var(--radius) - 4px);
+            background: #fff;
+            box-shadow: 0 18px 50px rgba(23, 20, 18, 0.11);
+            cursor: zoom-in;
+        }
+
+        .project-copy-panel {
+            position: relative;
+            padding: 22px;
+            border: 1px solid rgba(255,255,255,0.82);
+            border-radius: var(--radius);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.86), rgba(244,239,231,0.66)),
+                linear-gradient(90deg, rgba(6, 78, 59, 0.08), rgba(180, 83, 9, 0.08));
+            box-shadow: 0 22px 68px rgba(23, 20, 18, 0.10);
+            backdrop-filter: blur(16px);
+        }
+
+        .project-counter {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 6px 10px;
+            border: 1px solid rgba(6, 78, 59, 0.12);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.62);
+            direction: ltr;
+            unicode-bidi: isolate;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .project-details {
+            position: relative;
+            min-height: 252px;
+            margin-top: 18px;
+        }
+
+        .project-text {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(18px);
+            transition: opacity 0.42s ease, transform 0.5s ease;
+        }
+
+        .project-text.is-active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .project-type {
+            display: inline-flex;
+            margin-bottom: 10px;
+            color: var(--gold);
+            font-weight: 900;
+        }
+
+        .project-text h3 {
+            margin: 0 0 12px;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            line-height: 1;
+        }
+
+        .project-text p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.03rem;
+            line-height: 1.85;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .project-tags span {
+            display: inline-flex;
+            padding: 7px 10px;
+            border: 1px solid rgba(6, 78, 59, 0.10);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.60);
+            font-weight: 800;
+        }
+
+        .project-progress {
+            display: grid;
+            gap: 9px;
+            margin-top: 18px;
+        }
+
+        .project-step {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid rgba(6, 78, 59, 0.12);
+            border-radius: var(--radius);
+            color: var(--ink);
+            background: rgba(255,255,255,0.62);
+            text-align: right;
+            cursor: pointer;
+            transition: background 0.24s ease, color 0.24s ease, border-color 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease;
+        }
+
+        .project-step:hover {
+            transform: translateY(-2px);
+            border-color: rgba(6, 78, 59, 0.22);
+        }
+
+        .project-step.is-active {
+            color: #fff;
+            background: var(--green);
+            border-color: transparent;
+            box-shadow: 0 14px 28px rgba(6, 78, 59, 0.20);
+        }
+
+        .project-step span {
+            color: inherit;
+            font-weight: 900;
+            opacity: 0.72;
+        }
+
+        .project-step strong {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .social-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.84);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.78);
+            box-shadow: 0 18px 56px rgba(23, 20, 18, 0.10);
+        }
+
+        .social-card img {
+            width: 100%;
+            aspect-ratio: 1.18;
+            object-fit: contain;
+            background: #fff;
+            cursor: zoom-in;
+            transition: transform 0.45s ease, filter 0.45s ease;
+        }
+
+        .social-card:hover img {
+            transform: scale(1.02);
+            filter: saturate(1.06) contrast(1.02);
+        }
+
+        .social-card figcaption {
+            padding: 14px 16px 16px;
+            border-top: 1px solid var(--line);
+            background: rgba(255,255,255,0.74);
+        }
+
+        .social-card span {
+            display: inline-flex;
+            margin-bottom: 6px;
+            color: var(--gold);
+            font-size: 0.84rem;
+            font-weight: 900;
+        }
+
+        .social-card h3 {
+            margin: 0;
+        }
+
         .campaign-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -601,7 +901,7 @@
         .campaign-card img {
             width: 100%;
             height: 270px;
-            object-fit: cover;
+            object-fit: contain;
             background: #fff;
             cursor: zoom-in;
         }
@@ -610,49 +910,452 @@
             padding: 18px;
         }
 
+        .campaign-body h3 {
+            margin: 0;
+            color: var(--green);
+        }
+
         .campaign-body span {
             color: var(--gold);
             font-weight: 900;
             font-size: 0.86rem;
         }
 
-        .logo-band {
-            width: 100%;
-            overflow: hidden;
-            border-block: 1px solid var(--line);
-            background: rgba(255,255,255,0.46);
-            backdrop-filter: blur(12px);
+        .store-showcase {
+            display: grid;
+            grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+            gap: 18px;
+            align-items: stretch;
         }
 
-        .logo-marquee {
+        .store-feature,
+        .store-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.84);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.74);
+            box-shadow: 0 20px 64px rgba(23, 20, 18, 0.10);
+            backdrop-filter: blur(16px);
+        }
+
+        .store-feature {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(240px, 0.58fr);
+            min-height: 520px;
+        }
+
+        .store-preview {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 100%;
+            padding: 22px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.94), rgba(244,239,231,0.62)),
+                repeating-linear-gradient(0deg, rgba(6, 78, 59, 0.045) 0 1px, transparent 1px 62px);
+        }
+
+        .store-preview::before {
+            content: "";
+            position: absolute;
+            inset: 18px 18px auto;
+            height: 34px;
+            border: 1px solid rgba(6, 78, 59, 0.08);
+            border-bottom: 0;
+            border-radius: var(--radius) var(--radius) 0 0;
+            background:
+                radial-gradient(circle at calc(100% - 18px) 50%, rgba(190, 52, 85, 0.82) 0 4px, transparent 5px),
+                radial-gradient(circle at calc(100% - 34px) 50%, rgba(180, 83, 9, 0.82) 0 4px, transparent 5px),
+                radial-gradient(circle at calc(100% - 50px) 50%, rgba(6, 78, 59, 0.82) 0 4px, transparent 5px),
+                rgba(255,255,255,0.86);
+        }
+
+        .store-preview img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-height: 430px;
+            object-fit: contain;
+            padding-top: 34px;
+            border-radius: calc(var(--radius) - 4px);
+            cursor: zoom-in;
+            filter: drop-shadow(0 20px 34px rgba(23, 20, 18, 0.16));
+            transition: transform 0.45s ease, filter 0.45s ease;
+        }
+
+        .store-feature:hover .store-preview img,
+        .store-card:hover img {
+            transform: translateY(-4px) scale(1.015);
+            filter: drop-shadow(0 24px 42px rgba(23, 20, 18, 0.20));
+        }
+
+        .store-feature-copy {
             display: flex;
-            width: max-content;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 24px;
+            border-right: 1px solid var(--line);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.78), rgba(244,239,231,0.70)),
+                linear-gradient(90deg, rgba(6, 78, 59, 0.08), rgba(180, 83, 9, 0.08));
+        }
+
+        .store-feature-copy .kicker {
+            margin-bottom: 12px;
+        }
+
+        .store-feature-copy h3 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1;
+        }
+
+        .store-feature-copy p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .store-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+        }
+
+        .store-stats span {
+            display: grid;
+            gap: 4px;
+            padding: 11px;
+            border: 1px solid rgba(6, 78, 59, 0.10);
+            border-radius: var(--radius);
+            color: var(--muted);
+            background: rgba(255,255,255,0.62);
+            font-weight: 800;
+        }
+
+        .store-stats strong {
+            color: var(--green);
+            font-size: 1.22rem;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
-            padding: 18px 0;
-            animation: marquee 36s linear infinite;
+        }
+
+        .store-card {
+            display: grid;
+            grid-template-rows: minmax(0, 1fr) auto;
+            min-height: 252px;
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+        }
+
+        .store-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(6, 78, 59, 0.18);
+            box-shadow: 0 26px 70px rgba(23, 20, 18, 0.14);
+        }
+
+        .store-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            padding: 14px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(244,239,231,0.58));
+            cursor: zoom-in;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+
+        .store-card figcaption {
+            padding: 14px;
+            border-top: 1px solid var(--line);
+            background: rgba(255,255,255,0.70);
+        }
+
+        .store-card span {
+            display: inline-flex;
+            margin-bottom: 6px;
+            color: var(--gold);
+            font-size: 0.84rem;
+            font-weight: 900;
+        }
+
+        .store-card h3 {
+            margin: 0;
+        }
+
+        .store-lab {
+            display: grid;
+            grid-template-columns: minmax(300px, 0.44fr) minmax(0, 0.56fr);
+            grid-template-areas:
+                "details preview"
+                "selector preview";
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .store-lab-details,
+        .store-selector,
+        .store-browser {
+            border: 1px solid rgba(255,255,255,0.84);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.74);
+            box-shadow: 0 22px 68px rgba(23, 20, 18, 0.10);
+            backdrop-filter: blur(16px);
+        }
+
+        .store-lab-details {
+            grid-area: details;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 22px;
+            min-height: 330px;
+            padding: 24px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.88), rgba(244,239,231,0.66)),
+                linear-gradient(90deg, rgba(6, 78, 59, 0.08), rgba(180, 83, 9, 0.09));
+        }
+
+        .store-lab-details::after {
+            content: "";
+            position: absolute;
+            inset: auto 24px 0 24px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--rose));
+        }
+
+        .store-index {
+            display: inline-flex;
+            width: fit-content;
+            min-height: 30px;
+            align-items: center;
+            padding: 6px 10px;
+            border: 1px solid rgba(6, 78, 59, 0.12);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.66);
+            direction: ltr;
+            unicode-bidi: isolate;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .store-lab-details h3 {
+            margin: 12px 0 12px;
+            font-size: clamp(2.1rem, 4.4vw, 3.65rem);
+            line-height: 0.98;
+        }
+
+        .store-lab-details p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.04rem;
+            line-height: 1.85;
+        }
+
+        .store-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .store-chips span {
+            display: inline-flex;
+            padding: 7px 10px;
+            border: 1px solid rgba(6, 78, 59, 0.11);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.66);
+            font-weight: 900;
+        }
+
+        .store-browser {
+            grid-area: preview;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
+            min-height: 650px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.95), rgba(244,239,231,0.58)),
+                repeating-linear-gradient(90deg, rgba(6, 78, 59, 0.04) 0 1px, transparent 1px 74px);
+        }
+
+        .store-browser-bar {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 12px;
+            min-height: 50px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255,255,255,0.78);
+        }
+
+        .store-window-dots {
+            display: inline-flex;
+            gap: 7px;
+        }
+
+        .store-window-dots span {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        .store-window-dots span:nth-child(2) { background: var(--gold); }
+        .store-window-dots span:nth-child(3) { background: var(--rose); }
+
+        .store-url {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 8px 12px;
+            border: 1px solid rgba(6, 78, 59, 0.09);
+            border-radius: var(--radius);
+            color: var(--muted);
+            background: rgba(255,255,255,0.74);
+            direction: ltr;
+            text-align: left;
+            font-weight: 800;
+        }
+
+        .store-browser-bar i {
+            color: var(--green);
+        }
+
+        .store-screen {
+            display: grid;
+            place-items: center;
+            min-height: 0;
+            padding: clamp(18px, 3vw, 34px);
+        }
+
+        .store-screen img {
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            border-radius: calc(var(--radius) - 4px);
+            cursor: zoom-in;
+            filter: drop-shadow(0 28px 42px rgba(23, 20, 18, 0.18));
+            transition: opacity 0.28s ease, transform 0.42s ease, filter 0.42s ease;
+        }
+
+        .store-screen.is-swapping img {
+            opacity: 0;
+            transform: translateY(16px) scale(0.985);
+        }
+
+        .store-selector {
+            grid-area: selector;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .store-pick {
+            display: grid;
+            gap: 8px;
+            min-width: 0;
+            padding: 9px;
+            border: 1px solid rgba(6, 78, 59, 0.10);
+            border-radius: var(--radius);
+            color: var(--ink);
+            background: rgba(255,255,255,0.58);
+            cursor: pointer;
+            text-align: right;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .store-pick:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 78, 59, 0.22);
+        }
+
+        .store-pick.is-active {
+            color: #fff;
+            background: var(--green);
+            border-color: transparent;
+            box-shadow: 0 14px 30px rgba(6, 78, 59, 0.20);
+        }
+
+        .store-pick img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            padding: 6px;
+            border-radius: calc(var(--radius) - 4px);
+            background: #fff;
+        }
+
+        .store-pick strong,
+        .store-pick span {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .store-pick strong {
+            font-size: 0.94rem;
+        }
+
+        .store-pick span {
+            color: inherit;
+            opacity: 0.72;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .logo-band {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.82);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.54);
+            box-shadow: 0 18px 56px rgba(23, 20, 18, 0.08);
+            backdrop-filter: blur(14px);
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
         }
 
         .logo-item {
             display: grid;
             place-items: center;
-            width: 156px;
-            height: 94px;
+            width: 100%;
+            min-height: 118px;
             padding: 12px;
             border: 1px solid var(--line);
             border-radius: var(--radius);
-            background: #fff;
+            background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(244,239,231,0.56));
+            box-shadow: 0 14px 34px rgba(23, 20, 18, 0.07);
+            transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 78, 59, 0.20);
+            box-shadow: 0 20px 44px rgba(23, 20, 18, 0.11);
         }
 
         .logo-item img {
-            max-width: 100%;
-            max-height: 70px;
+            width: 100%;
+            height: 74px;
             object-fit: contain;
             cursor: zoom-in;
-        }
-
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(50%); }
         }
 
         .split-grid {
@@ -761,6 +1464,99 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
+        }
+
+        .freebies-panel {
+            width: min(760px, 100%);
+            margin: 0 auto;
+        }
+
+        .newsletter-card {
+            position: relative;
+            overflow: hidden;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.82);
+            border-radius: var(--radius);
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.82), rgba(244,239,231,0.64)),
+                linear-gradient(145deg, rgba(6, 78, 59, 0.10), rgba(180, 83, 9, 0.11));
+            box-shadow: 0 20px 64px rgba(23, 20, 18, 0.10);
+            backdrop-filter: blur(18px);
+        }
+
+        .newsletter-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 18px 0 18px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--gold), var(--rose));
+        }
+
+        .newsletter-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .newsletter-head .download-icon {
+            background: var(--green);
+        }
+
+        .newsletter-card p {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .newsletter-form {
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            margin-top: 18px;
+        }
+
+        .newsletter-form .form-message {
+            grid-column: 1 / -1;
+        }
+
+        .newsletter-form .field {
+            min-width: 0;
+        }
+
+        .newsletter-form .btn {
+            min-height: 50px;
+            white-space: nowrap;
+        }
+
+        .newsletter-files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .newsletter-files span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border: 1px solid rgba(6, 78, 59, 0.12);
+            border-radius: var(--radius);
+            color: var(--green);
+            background: rgba(255,255,255,0.64);
+            font-weight: 800;
+            font-size: 0.92rem;
+        }
+
+        .newsletter-downloads {
+            display: none;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .newsletter-downloads.is-visible {
+            display: grid;
+            animation: messageIn 0.45s ease both;
         }
 
         .download-card {
@@ -919,17 +1715,43 @@
             50% { transform: translateY(-14px) rotateZ(-1deg); }
         }
 
+        @keyframes wordFly {
+            0%, 100% {
+                opacity: 0.28;
+                transform: translate3d(0, 0, 0) rotate(var(--tilt)) scale(0.92);
+            }
+
+            42% {
+                opacity: 0.78;
+                transform: translate3d(var(--drift-x), var(--drift-y), 48px) rotate(var(--tilt-mid)) scale(1.08);
+            }
+
+            70% {
+                opacity: 0.52;
+                transform: translate3d(0, var(--drop-y), 0) rotate(var(--tilt)) scale(0.98);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .kinetic-word-label {
+                animation: none;
+                opacity: 0.34;
+            }
+        }
+
         @media (max-width: 980px) {
             .nav {
                 position: sticky;
                 top: 0;
                 left: auto;
+                z-index: 400;
                 width: 100%;
                 transform: none;
                 border-radius: 0;
                 align-items: flex-start;
                 flex-wrap: wrap;
                 padding: 10px 16px;
+                border-inline: 0;
             }
 
             .nav-toggle {
@@ -944,6 +1766,8 @@
                 gap: 6px;
                 padding-top: 10px;
                 border-top: 1px solid var(--line);
+                max-height: calc(100svh - 74px);
+                overflow-y: auto;
             }
 
             .nav.is-open .nav-links {
@@ -959,21 +1783,114 @@
                 min-height: auto;
                 padding-top: 54px;
                 padding-bottom: 56px;
+                scroll-margin-top: 74px;
+            }
+
+            section.content-section {
+                scroll-margin-top: 74px;
+            }
+
+            .hero-kinetic-words {
+                opacity: 0.38;
+            }
+
+            .kinetic-word:nth-child(n+11) {
+                display: none;
             }
 
             .hero-grid,
             .section-head,
             .split-grid,
+            .store-showcase,
+            .freebies-panel,
             .contact-panel {
                 grid-template-columns: 1fr;
+            }
+
+            .section-head {
+                align-items: start;
+                gap: 12px;
             }
 
             .hero-board {
                 min-height: 460px;
             }
 
+            .project-story {
+                min-height: 360svh;
+            }
+
+            .project-stage {
+                top: 78px;
+                grid-template-columns: 1fr;
+                gap: 16px;
+                min-height: calc(100svh - 88px);
+                align-content: center;
+            }
+
+            .project-media-stack {
+                min-height: min(42svh, 420px);
+            }
+
+            .project-media img {
+                max-height: min(36svh, 380px);
+            }
+
+            .project-copy-panel {
+                padding: 18px;
+            }
+
+            .project-details {
+                min-height: 196px;
+            }
+
+            .project-progress {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .store-lab {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "preview"
+                    "details"
+                    "selector";
+            }
+
+            .store-browser {
+                min-height: 500px;
+            }
+
+            .store-screen img {
+                max-height: 430px;
+            }
+
+            .store-selector {
+                grid-template-columns: repeat(5, minmax(120px, 1fr));
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .store-selector::-webkit-scrollbar {
+                display: none;
+            }
+
+            .store-feature {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .store-preview {
+                min-height: 420px;
+            }
+
+            .store-feature-copy {
+                border-right: 0;
+                border-top: 1px solid var(--line);
+            }
+
             .service-grid,
             .campaign-grid,
+            .social-grid,
             .testimonials-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -985,13 +1902,111 @@
                 padding-inline: 16px;
             }
 
+            .hero {
+                padding-top: 44px;
+                padding-bottom: 42px;
+                align-items: start;
+            }
+
+            section.content-section {
+                padding-block: 62px;
+            }
+
+            #hero-web {
+                opacity: 0.18;
+            }
+
+            .hero-kinetic-words {
+                display: block;
+                position: absolute;
+                inset: 20px 0 auto 0;
+                z-index: 1;
+                width: 100%;
+                height: 118px;
+                margin: 0;
+                opacity: 0.42;
+                overflow: hidden;
+                perspective: 900px;
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 76%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 76%, transparent 100%);
+            }
+
+            .kinetic-word {
+                position: absolute;
+                top: auto;
+                right: auto;
+                display: block;
+                --drift-x: 14px !important;
+                --drift-y: 10px !important;
+                --drop-y: 8px !important;
+                --tilt: -3deg !important;
+                --tilt-mid: 3deg !important;
+            }
+
+            .kinetic-word:nth-child(2n) {
+                --drift-x: -12px !important;
+                --tilt: 3deg !important;
+                --tilt-mid: -3deg !important;
+            }
+
+            .kinetic-word:nth-child(n+5) {
+                display: none;
+            }
+
+            .kinetic-word-label {
+                min-height: 28px;
+                padding: 6px 9px;
+                font-size: 0.7rem;
+                opacity: 0.52;
+                box-shadow: 0 12px 30px rgba(23, 20, 18, 0.09);
+                backdrop-filter: blur(12px);
+            }
+
+            .kinetic-word:nth-child(1) { top: 6px; right: 69%; }
+            .kinetic-word:nth-child(2) { top: 20px; right: 6%; }
+            .kinetic-word:nth-child(3) { top: 58px; right: 57%; }
+            .kinetic-word:nth-child(4) { top: 74px; right: 12%; }
+        }
+
+        @media (max-width: 420px) {
+            .hero-kinetic-words {
+                top: 18px;
+                height: 106px;
+                opacity: 0.38;
+            }
+
+            .kinetic-word-label {
+                min-height: 26px;
+                padding: 5px 8px;
+                font-size: 0.66rem;
+            }
+
+            .kinetic-word:nth-child(n+4) {
+                display: none;
+            }
+
+            .kinetic-word:nth-child(1) { top: 6px; right: 66%; }
+            .kinetic-word:nth-child(2) { top: 20px; right: 7%; }
+            .kinetic-word:nth-child(3) { top: 58px; right: 56%; }
+
+            .hero-grid {
+                gap: 24px;
+            }
+
+            .eyebrow {
+                margin-bottom: 14px;
+                padding: 7px 10px;
+                font-size: 0.9rem;
+            }
+
             h1 {
-                font-size: clamp(2.45rem, 12vw, 3.45rem);
-                line-height: 1;
+                font-size: clamp(2.1rem, 10vw, 2.85rem);
+                line-height: 1.05;
             }
 
             h2 {
-                font-size: clamp(1.8rem, 9vw, 2.55rem);
+                font-size: clamp(1.85rem, 8vw, 2.35rem);
+                line-height: 1.12;
             }
 
             .hero-copy {
@@ -1006,12 +2021,217 @@
                 align-items: stretch;
             }
 
+            .project-story {
+                min-height: 380svh;
+            }
+
+            .project-stage {
+                top: 74px;
+                min-height: calc(100svh - 80px);
+                padding-block: 10px;
+            }
+
+            .project-media-stack {
+                height: 220px;
+                min-height: auto;
+            }
+
+            .project-media {
+                padding: 10px;
+            }
+
+            .project-media img {
+                max-height: 100%;
+            }
+
+            .project-copy-panel {
+                padding: 12px;
+            }
+
+            .project-counter {
+                min-height: 28px;
+                padding: 5px 9px;
+                font-size: 0.9rem;
+            }
+
+            .project-details {
+                min-height: 178px;
+                margin-top: 12px;
+            }
+
+            .project-type {
+                margin-bottom: 8px;
+                font-size: 0.9rem;
+            }
+
+            .project-text h3 {
+                margin-bottom: 8px;
+                font-size: 1.58rem;
+                line-height: 1.05;
+            }
+
+            .project-text p {
+                font-size: 0.9rem;
+                line-height: 1.62;
+            }
+
+            .project-tags {
+                gap: 6px;
+                margin-top: 12px;
+            }
+
+            .project-tags span {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+
+            .project-progress {
+                gap: 7px;
+                margin-top: 12px;
+            }
+
+            .project-step {
+                grid-template-columns: 1fr;
+                gap: 4px;
+                padding: 8px;
+                text-align: center;
+                font-size: 0.88rem;
+            }
+
+            .store-lab {
+                gap: 12px;
+            }
+
+            .store-lab-details {
+                min-height: auto;
+                padding: 16px;
+            }
+
+            .store-lab-details h3 {
+                font-size: 2rem;
+            }
+
+            .store-lab-details p {
+                font-size: 0.94rem;
+                line-height: 1.7;
+            }
+
+            .store-browser {
+                min-height: auto;
+            }
+
+            .store-browser-bar {
+                grid-template-columns: auto minmax(0, 1fr);
+                min-height: 44px;
+                padding: 8px 10px;
+            }
+
+            .store-browser-bar i {
+                display: none;
+            }
+
+            .store-screen {
+                padding: 14px;
+            }
+
+            .store-screen img {
+                max-height: 350px;
+            }
+
+            .store-selector {
+                grid-template-columns: repeat(5, minmax(112px, 1fr));
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .store-pick {
+                padding: 8px;
+            }
+
+            .store-pick strong {
+                font-size: 0.86rem;
+            }
+
+            .store-showcase {
+                gap: 14px;
+            }
+
+            .store-preview {
+                min-height: auto;
+                padding: 14px;
+            }
+
+            .store-preview::before {
+                inset: 12px 12px auto;
+                height: 28px;
+            }
+
+            .store-preview img {
+                max-height: 330px;
+                padding-top: 28px;
+            }
+
+            .store-feature-copy {
+                padding: 16px;
+            }
+
+            .store-stats,
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .store-card {
+                min-height: auto;
+            }
+
+            .store-card img {
+                height: auto;
+                max-height: 300px;
+            }
+
+            .newsletter-form,
+            .newsletter-downloads {
+                grid-template-columns: 1fr;
+            }
+
             .btn {
                 width: 100%;
             }
 
             .hero-board {
-                min-height: 340px;
+                min-height: auto;
+                perspective: none;
+            }
+
+            .showcase-stack {
+                position: relative;
+                inset: auto;
+                display: grid;
+                gap: 12px;
+                transform-style: flat;
+                animation: none;
+            }
+
+            .hero-card {
+                position: relative;
+                transform: none !important;
+            }
+
+            .hero-card.big {
+                inset: auto;
+                aspect-ratio: 1.18;
+            }
+
+            .hero-card.small {
+                display: none;
+            }
+
+            .hero-card.metric {
+                right: auto;
+                bottom: auto;
+                width: 100%;
+                min-height: auto;
+                padding: 14px;
             }
 
             .gallery-shell {
@@ -1023,10 +2243,6 @@
                 height: 38px;
             }
 
-            .hero-card.big { inset: 0 22px 82px 0; }
-            .hero-card.small { width: 54%; height: 38%; }
-            .hero-card.metric { width: 62%; padding: 14px; }
-
             .work-card {
                 flex-basis: min(76vw, 310px);
             }
@@ -1036,7 +2252,7 @@
             }
 
             .metric-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 8px;
             }
 
@@ -1044,8 +2260,18 @@
                 padding: 10px;
             }
 
+            .metric-item strong {
+                font-size: 1.22rem;
+            }
+
+            .metric-item span {
+                font-size: 0.82rem;
+                line-height: 1.35;
+            }
+
             .service-grid,
             .campaign-grid,
+            .social-grid,
             .testimonials-grid,
             .download-grid {
                 grid-template-columns: 1fr;
@@ -1053,7 +2279,35 @@
 
             .campaign-card img,
             .testimonial-card img {
-                height: 280px;
+                height: auto;
+                max-height: 420px;
+                object-fit: contain;
+            }
+
+            .logo-band {
+                padding: 10px;
+            }
+
+            .logo-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .logo-item {
+                min-height: 104px;
+                padding: 10px;
+            }
+
+            .logo-item img {
+                height: 62px;
+            }
+
+            .newsletter-card {
+                padding: 18px;
+            }
+
+            .newsletter-head {
+                gap: 10px;
             }
 
             .contact-panel {
@@ -1062,6 +2316,7 @@
 
             .contact-note {
                 min-height: auto;
+                padding: 0;
             }
         }
     </style>
@@ -1088,11 +2343,28 @@
                 <a href="#stores">المتاجر</a>
                 <a href="#clients">العملاء</a>
                 <a href="#freebies">ملفات مجانية</a>
+                <a href="#contact">ابدأ مشروعك</a>
             </div>
         </nav>
 
         <header class="hero" id="top">
             <canvas id="hero-web" aria-hidden="true"></canvas>
+            <div class="hero-kinetic-words" aria-hidden="true">
+                <span class="kinetic-word" data-depth="34" data-spin="4" style="--top: 11%; --right: 7%; --size: 1.04rem; --delay: -0.6s; --duration: 12s; --drift-x: -42px; --drift-y: 34px; --drop-y: 18px; --tilt: -7deg; --tilt-mid: 6deg;"><span class="kinetic-word-label">ROAS</span></span>
+                <span class="kinetic-word" data-depth="46" data-spin="-5" style="--top: 18%; --right: 28%; --size: 0.98rem; --delay: -5.2s; --duration: 14s; --drift-x: 36px; --drift-y: -28px; --drop-y: 22px; --tilt: 8deg; --tilt-mid: -5deg;"><span class="kinetic-word-label">تحليل بيانات</span></span>
+                <span class="kinetic-word" data-depth="58" data-spin="6" style="--top: 13%; --right: 68%; --size: 1.16rem; --delay: -2.8s; --duration: 15s; --drift-x: -54px; --drift-y: -22px; --drop-y: 20px; --tilt: -10deg; --tilt-mid: 7deg;"><span class="kinetic-word-label">Google Ads</span></span>
+                <span class="kinetic-word" data-depth="30" data-spin="-3" style="--top: 34%; --right: 5%; --size: 0.9rem; --delay: -7s; --duration: 13s; --drift-x: 40px; --drift-y: 26px; --drop-y: 16px; --tilt: 5deg; --tilt-mid: -8deg;"><span class="kinetic-word-label">سوشال ميديا</span></span>
+                <span class="kinetic-word" data-depth="66" data-spin="7" style="--top: 45%; --right: 18%; --size: 1.28rem; --delay: -3.6s; --duration: 16s; --drift-x: -58px; --drift-y: 32px; --drop-y: 24px; --tilt: -6deg; --tilt-mid: 9deg;"><span class="kinetic-word-label">نمو المبيعات</span></span>
+                <span class="kinetic-word" data-depth="40" data-spin="-6" style="--top: 33%; --right: 43%; --size: 0.96rem; --delay: -10s; --duration: 12.5s; --drift-x: 34px; --drift-y: -34px; --drop-y: 18px; --tilt: 9deg; --tilt-mid: -7deg;"><span class="kinetic-word-label">Meta Ads</span></span>
+                <span class="kinetic-word" data-depth="72" data-spin="5" style="--top: 38%; --right: 76%; --size: 1.06rem; --delay: -1.8s; --duration: 15.5s; --drift-x: -48px; --drift-y: 26px; --drop-y: 22px; --tilt: -4deg; --tilt-mid: 8deg;"><span class="kinetic-word-label">Content Strategy</span></span>
+                <span class="kinetic-word" data-depth="52" data-spin="-4" style="--top: 62%; --right: 8%; --size: 0.94rem; --delay: -8.4s; --duration: 13.5s; --drift-x: 42px; --drift-y: -24px; --drop-y: 19px; --tilt: 7deg; --tilt-mid: -5deg;"><span class="kinetic-word-label">Leads</span></span>
+                <span class="kinetic-word" data-depth="62" data-spin="8" style="--top: 69%; --right: 31%; --size: 1.08rem; --delay: -4.8s; --duration: 14.8s; --drift-x: -46px; --drift-y: 36px; --drop-y: 24px; --tilt: -9deg; --tilt-mid: 4deg;"><span class="kinetic-word-label">حملات إعلانية</span></span>
+                <span class="kinetic-word" data-depth="38" data-spin="-7" style="--top: 58%; --right: 60%; --size: 0.92rem; --delay: -6.2s; --duration: 12.8s; --drift-x: 38px; --drift-y: -30px; --drop-y: 17px; --tilt: 6deg; --tilt-mid: -9deg;"><span class="kinetic-word-label">A/B Testing</span></span>
+                <span class="kinetic-word" data-depth="74" data-spin="6" style="--top: 77%; --right: 73%; --size: 1rem; --delay: -11s; --duration: 16.4s; --drift-x: -60px; --drift-y: 24px; --drop-y: 22px; --tilt: -5deg; --tilt-mid: 7deg;"><span class="kinetic-word-label">Retargeting</span></span>
+                <span class="kinetic-word" data-depth="44" data-spin="-5" style="--top: 82%; --right: 15%; --size: 0.88rem; --delay: -2.2s; --duration: 13.8s; --drift-x: 32px; --drift-y: -26px; --drop-y: 18px; --tilt: 8deg; --tilt-mid: -6deg;"><span class="kinetic-word-label">Conversion Rate</span></span>
+                <span class="kinetic-word" data-depth="56" data-spin="4" style="--top: 24%; --right: 86%; --size: 0.9rem; --delay: -9.5s; --duration: 15.2s; --drift-x: -44px; --drift-y: 30px; --drop-y: 20px; --tilt: -8deg; --tilt-mid: 5deg;"><span class="kinetic-word-label">SEO</span></span>
+                <span class="kinetic-word" data-depth="50" data-spin="-4" style="--top: 86%; --right: 48%; --size: 0.96rem; --delay: -12.5s; --duration: 14.4s; --drift-x: 40px; --drift-y: -34px; --drop-y: 21px; --tilt: 5deg; --tilt-mid: -7deg;"><span class="kinetic-word-label">هوية بصرية</span></span>
+            </div>
             <div class="hero-grid">
                 <div class="hero-copybox reveal">
                     <span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> تسويق رقمي مبني على نتائج حقيقية</span>
@@ -1139,7 +2411,7 @@
                     <article class="service-card reveal">
                         <span class="icon"><i class="fa-solid fa-bullhorn"></i></span>
                         <h3>الحملات الإعلانية</h3>
-                        <p>عرض نتائج سناب، Google Analytics، ولقطات قبل/بعد لقياس التحسن.</p>
+                        <p>عرض نتائج الحملات حسب المنصة، مع لقطات واضحة وسهلة القراءة.</p>
                     </article>
                     <article class="service-card reveal">
                         <span class="icon"><i class="fa-solid fa-store"></i></span>
@@ -1149,12 +2421,7 @@
                     <article class="service-card reveal">
                         <span class="icon"><i class="fa-solid fa-hashtag"></i></span>
                         <h3>سوشال ميديا</h3>
-                        <p>تصاميم محتوى لحسابات مختلفة مع تصفح أفقي سريع ومريح.</p>
-                    </article>
-                    <article class="service-card reveal">
-                        <span class="icon"><i class="fa-solid fa-pen-nib"></i></span>
-                        <h3>هوية وشعارات</h3>
-                        <p>جدار شعارات متحرك يبرز ثقة العملاء وتنوع القطاعات.</p>
+                        <p>تصاميم محتوى لحسابات مختلفة في شبكة مرتبة تعرض العمل كاملًا.</p>
                     </article>
                 </div>
             </div>
@@ -1170,27 +2437,60 @@
                     <p>مجموعة مختارة تبرز تنوع التنفيذ بين الهوية، المحتوى، وتجارب العملاء.</p>
                 </div>
 
-                <div class="gallery-shell reveal">
-                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
-                    <div class="gallery-track">
-                        <figure class="work-card reveal landscape">
-                            <img src="المشاريع/نوفا.png" alt="مشروع نوفا">
-                            <figcaption><span>مشروع</span><h3>نوفا</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal landscape">
-                            <img src="المشاريع/نوفا ايفنت.webp" alt="نوفا ايفنت">
-                            <figcaption><span>فعاليات</span><h3>نوفا إيفنت</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal">
-                            <img src="المشاريع/f3fe32da-850a-4816-b005-9f9c7fe8099a.JPG" alt="مشروع تسويقي">
-                            <figcaption><span>تنفيذ</span><h3>حملة بصرية</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal">
-                            <img src="المشاريع/8a1391e7-1e47-47c8-89b2-e56d1a313222.JPG" alt="مشروع عميل">
-                            <figcaption><span>تجربة عميل</span><h3>محتوى ميداني</h3></figcaption>
-                        </figure>
+                <div class="project-story reveal" data-project-story>
+                    <div class="project-stage">
+                        <div class="project-media-stack">
+                            <figure class="project-media is-active" data-project-panel="0">
+                                <img src="المشاريع/نوفا.png" alt="مشروع نوفا">
+                            </figure>
+                            <figure class="project-media" data-project-panel="1">
+                                <img src="المشاريع/نوفا ايفنت.webp" alt="نوفا إيفنت">
+                            </figure>
+                            <figure class="project-media" data-project-panel="2">
+                                <img src="المشاريع/f3fe32da-850a-4816-b005-9f9c7fe8099a.JPG" alt="حملة بصرية">
+                            </figure>
+                            <figure class="project-media" data-project-panel="3">
+                                <img src="المشاريع/8a1391e7-1e47-47c8-89b2-e56d1a313222.JPG" alt="محتوى ميداني">
+                            </figure>
+                        </div>
+
+                        <aside class="project-copy-panel">
+                            <span class="project-counter" data-project-counter>01 / 04</span>
+                            <div class="project-details">
+                                <article class="project-text is-active" data-project-text="0">
+                                    <span class="project-type">مشروع بصري</span>
+                                    <h3>نوفا</h3>
+                                    <p>عرض بصري نظيف يبرز الهوية ويترك مساحة واضحة للصورة والرسالة التسويقية.</p>
+                                    <div class="project-tags"><span>هوية</span><span>عرض بصري</span><span>تسويق</span></div>
+                                </article>
+                                <article class="project-text" data-project-text="1">
+                                    <span class="project-type">فعاليات</span>
+                                    <h3>نوفا إيفنت</h3>
+                                    <p>تنسيق بصري مناسب للفعاليات، يوازن بين حضور العلامة وسهولة قراءة المحتوى.</p>
+                                    <div class="project-tags"><span>Event</span><span>Branding</span><span>Content</span></div>
+                                </article>
+                                <article class="project-text" data-project-text="2">
+                                    <span class="project-type">تنفيذ تسويقي</span>
+                                    <h3>حملة بصرية</h3>
+                                    <p>لقطة من محتوى تنفيذي يوضح طريقة تحويل الفكرة إلى مادة قابلة للنشر والعرض.</p>
+                                    <div class="project-tags"><span>حملة</span><span>تصميم</span><span>تنفيذ</span></div>
+                                </article>
+                                <article class="project-text" data-project-text="3">
+                                    <span class="project-type">تجربة عميل</span>
+                                    <h3>محتوى ميداني</h3>
+                                    <p>محتوى يعتمد على حضور واقعي للعلامة، مع صورة كاملة وتفاصيل مختصرة حول العمل.</p>
+                                    <div class="project-tags"><span>ميداني</span><span>سوشال</span><span>عميل</span></div>
+                                </article>
+                            </div>
+
+                            <div class="project-progress" aria-label="المشاريع">
+                                <button class="project-step is-active" type="button" data-project-step="0" aria-current="true"><span>01</span><strong>نوفا</strong></button>
+                                <button class="project-step" type="button" data-project-step="1"><span>02</span><strong>نوفا إيفنت</strong></button>
+                                <button class="project-step" type="button" data-project-step="2"><span>03</span><strong>حملة بصرية</strong></button>
+                                <button class="project-step" type="button" data-project-step="3"><span>04</span><strong>محتوى ميداني</strong></button>
+                            </div>
+                        </aside>
                     </div>
-                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
                 </div>
             </div>
         </section>
@@ -1206,40 +2506,48 @@
 
                 <div class="campaign-grid">
                     <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/الورد قبل.png" alt="نتائج الورد قبل">
-                        <div class="campaign-body"><span>قبل</span><h3>الورد</h3></div>
+                        <img src="نتائج الحملات الاعلانية/Sleepnice(1).png" alt="Google Ads">
+                        <div class="campaign-body"><h3>Google Ads</h3></div>
                     </article>
                     <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/الورد بعد.png" alt="نتائج الورد بعد">
-                        <div class="campaign-body"><span>بعد</span><h3>تحسن حملة الورد</h3></div>
-                    </article>
-                    <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/حملة الورد.png" alt="حملة الورد">
-                        <div class="campaign-body"><span>حملة</span><h3>أداء حملة الورد</h3></div>
-                    </article>
-                    <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/دهليز قبل.png" alt="دهليز قبل">
-                        <div class="campaign-body"><span>قبل</span><h3>دهليز</h3></div>
-                    </article>
-                    <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/دهليز بعد.png" alt="دهليز بعد">
-                        <div class="campaign-body"><span>بعد</span><h3>نتائج دهليز</h3></div>
+                        <img src="نتائج الحملات الاعلانية/اللوجستيات .png" alt="Google Ads">
+                        <div class="campaign-body"><h3>Google Ads</h3></div>
                     </article>
                     <article class="campaign-card reveal">
                         <img src="نتائج الحملات الاعلانية/جوجل انالتكس.png" alt="Google Analytics">
-                        <div class="campaign-body"><span>تحليل</span><h3>Google Analytics</h3></div>
+                        <div class="campaign-body"><h3>Google Analytics</h3></div>
                     </article>
                     <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/سناب شات.png" alt="سناب شات">
-                        <div class="campaign-body"><span>منصة</span><h3>Snapchat Ads</h3></div>
+                        <img src="نتائج الحملات الاعلانية/حملة الورد.png" alt="TikTok Ads">
+                        <div class="campaign-body"><h3>TikTok Ads</h3></div>
                     </article>
                     <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/عطور.jpeg" alt="نتائج عطور">
-                        <div class="campaign-body"><span>قطاع</span><h3>العطور</h3></div>
+                        <img src="نتائج الحملات الاعلانية/حملات دهليز.png" alt="TikTok Ads">
+                        <div class="campaign-body"><h3>TikTok Ads</h3></div>
                     </article>
                     <article class="campaign-card reveal">
-                        <img src="نتائج الحملات الاعلانية/Sleepnice(1).png" alt="Sleepnice">
-                        <div class="campaign-body"><span>عميل</span><h3>Sleepnice</h3></div>
+                        <img src="نتائج الحملات الاعلانية/سناب شات.png" alt="Snapchat Ads">
+                        <div class="campaign-body"><h3>Snapchat Ads</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/الورد قبل.png" alt="سلة">
+                        <div class="campaign-body"><h3>سلة</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/الورد بعد.png" alt="سلة">
+                        <div class="campaign-body"><h3>سلة</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/دهليز قبل.png" alt="سلة">
+                        <div class="campaign-body"><h3>سلة</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/دهليز بعد.png" alt="سلة">
+                        <div class="campaign-body"><h3>سلة</h3></div>
+                    </article>
+                    <article class="campaign-card reveal">
+                        <img src="نتائج الحملات الاعلانية/عطور.jpeg" alt="سلة">
+                        <div class="campaign-body"><h3>سلة</h3></div>
                     </article>
                 </div>
             </div>
@@ -1255,31 +2563,90 @@
                     <p>نماذج متجرية تركز على وضوح الهوية وتجربة الشراء وطريقة عرض المنتجات.</p>
                 </div>
 
-                <div class="gallery-shell reveal">
-                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
-                    <div class="gallery-track">
-                        <figure class="work-card reveal tall">
-                            <img src="انشاء متاجر الكترونية/متجر ميك اب.png" alt="متجر ميك اب">
-                            <figcaption><span>متجر</span><h3>متجر ميك أب</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal tall">
-                            <img src="انشاء متاجر الكترونية/متجر متاع.png" alt="متجر متاع">
-                            <figcaption><span>متجر</span><h3>متجر متاع</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal tall">
-                            <img src="انشاء متاجر الكترونية/متجر عالطاير.png" alt="متجر عالطاير">
-                            <figcaption><span>متجر</span><h3>عالطاير</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal tall">
-                            <img src="انشاء متاجر الكترونية/سمار.png" alt="متجر سمار">
-                            <figcaption><span>متجر</span><h3>سمار</h3></figcaption>
-                        </figure>
-                        <figure class="work-card reveal tall">
-                            <img src="انشاء متاجر الكترونية/folaz.JPEG" alt="متجر folaz">
-                            <figcaption><span>متجر</span><h3>Folaz</h3></figcaption>
-                        </figure>
+                <div class="store-lab reveal" data-store-lab>
+                    <article class="store-lab-details">
+                        <div>
+                            <span class="store-index" data-store-index>01 / 05</span>
+                            <span class="kicker" data-store-category>واجهة متجر</span>
+                            <h3 data-store-title>متجر ميك أب</h3>
+                            <p data-store-description>واجهة متجرية مرتبة تركز على إبراز المنتجات وتقديم تجربة شراء واضحة من أول شاشة.</p>
+                            <div class="store-chips" data-store-chips>
+                                <span>UI واضح</span>
+                                <span>منتجات بارزة</span>
+                                <span>جاهز للجوال</span>
+                            </div>
+                        </div>
+                        <a class="btn secondary" href="#contact"><i class="fa-solid fa-paper-plane"></i> ابدأ متجر مشابه</a>
+                    </article>
+
+                    <figure class="store-browser store-main-media">
+                        <div class="store-browser-bar">
+                            <span class="store-window-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                            <span class="store-url" data-store-url>amal.showcase/store/makeup</span>
+                            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                        </div>
+                        <div class="store-screen" data-store-screen>
+                            <img src="انشاء متاجر الكترونية/متجر ميك اب.png" alt="متجر ميك أب" data-store-image>
+                        </div>
+                    </figure>
+
+                    <div class="store-selector" aria-label="اختيار المتجر">
+                        <button class="store-pick is-active" type="button" data-store-pick
+                            data-src="انشاء متاجر الكترونية/متجر ميك اب.png"
+                            data-title="متجر ميك أب"
+                            data-category="واجهة متجر"
+                            data-description="واجهة متجرية مرتبة تركز على إبراز المنتجات وتقديم تجربة شراء واضحة من أول شاشة."
+                            data-url="amal.showcase/store/makeup"
+                            data-chips="UI واضح|منتجات بارزة|جاهز للجوال">
+                            <img src="انشاء متاجر الكترونية/متجر ميك اب.png" alt="">
+                            <strong>متجر ميك أب</strong>
+                            <span>Beauty Store</span>
+                        </button>
+                        <button class="store-pick" type="button" data-store-pick
+                            data-src="انشاء متاجر الكترونية/متجر متاع.png"
+                            data-title="متجر متاع"
+                            data-category="متجر إلكتروني"
+                            data-description="تصميم هادئ ومنظم لعرض المنتجات بطريقة تسهل المقارنة وتدعم قرار الشراء."
+                            data-url="amal.showcase/store/mata"
+                            data-chips="تصفح واضح|منتجات منظمة|هوية هادئة">
+                            <img src="انشاء متاجر الكترونية/متجر متاع.png" alt="">
+                            <strong>متجر متاع</strong>
+                            <span>Commerce UI</span>
+                        </button>
+                        <button class="store-pick" type="button" data-store-pick
+                            data-src="انشاء متاجر الكترونية/متجر عالطاير.png"
+                            data-title="عالطاير"
+                            data-category="واجهة متجر"
+                            data-description="واجهة عملية تضع المنتج في المنتصف، وتقدم تجربة سريعة ومناسبة للجمهور المتحرك."
+                            data-url="amal.showcase/store/altayer"
+                            data-chips="سرعة وصول|تجربة مباشرة|Mobile First">
+                            <img src="انشاء متاجر الكترونية/متجر عالطاير.png" alt="">
+                            <strong>عالطاير</strong>
+                            <span>Mobile First</span>
+                        </button>
+                        <button class="store-pick" type="button" data-store-pick
+                            data-src="انشاء متاجر الكترونية/سمار.png"
+                            data-title="سمار"
+                            data-category="تصميم متجر"
+                            data-description="عرض بصري متوازن لمنتجات المتجر مع حضور واضح للهوية ومساحة كافية للمحتوى."
+                            data-url="amal.showcase/store/smar"
+                            data-chips="هوية واضحة|عرض منتجات|توازن بصري">
+                            <img src="انشاء متاجر الكترونية/سمار.png" alt="">
+                            <strong>سمار</strong>
+                            <span>Store Design</span>
+                        </button>
+                        <button class="store-pick" type="button" data-store-pick
+                            data-src="انشاء متاجر الكترونية/folaz.JPEG"
+                            data-title="Folaz"
+                            data-category="واجهة متجر"
+                            data-description="واجهة متجرية واسعة تعطي المنتج حضوراً أكبر وتناسب العلامات التي تحتاج عرضاً بصرياً غنيًا."
+                            data-url="amal.showcase/store/folaz"
+                            data-chips="عرض واسع|Visual Focus|تجربة شراء">
+                            <img src="انشاء متاجر الكترونية/folaz.JPEG" alt="">
+                            <strong>Folaz</strong>
+                            <span>Visual Store</span>
+                        </button>
                     </div>
-                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
                 </div>
             </div>
         </section>
@@ -1294,20 +2661,16 @@
                     <p>تصاميم وحسابات تعكس نبرة كل علامة وتبني حضورها اليومي على المنصات.</p>
                 </div>
 
-                <div class="gallery-shell reveal">
-                    <button class="gallery-nav prev" type="button" aria-label="السابق"><i class="fa-solid fa-chevron-right"></i></button>
-                    <div class="gallery-track">
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Petcure.png" alt="Petcure"><figcaption><span>سوشال</span><h3>Petcure</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Diggipacks.png" alt="Diggipacks"><figcaption><span>سوشال</span><h3>Diggipacks</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/Sleepnice.png" alt="Sleepnice"><figcaption><span>سوشال</span><h3>Sleepnice</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/كيد فيرست سوشال ميديا.png" alt="كيد فيرست"><figcaption><span>سوشال</span><h3>كيد فيرست</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/نوفا ايفنت سوشال ميديا.png" alt="نوفا ايفنت"><figcaption><span>سوشال</span><h3>نوفا إيفنت</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/انشاء متجر NEE Makeup Milano.png" alt="NEE Makeup Milano"><figcaption><span>متجر وسوشال</span><h3>NEE Makeup Milano</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/1سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/2سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
-                        <figure class="work-card reveal landscape"><img src="سوشال ميديا/3سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
-                    </div>
-                    <button class="gallery-nav next" type="button" aria-label="التالي"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="social-grid reveal">
+                    <figure class="social-card reveal"><img src="سوشال ميديا/Petcure.png" alt="Petcure"><figcaption><span>سوشال</span><h3>Petcure</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/Diggipacks.png" alt="Diggipacks"><figcaption><span>سوشال</span><h3>Diggipacks</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/Sleepnice.png" alt="Sleepnice"><figcaption><span>سوشال</span><h3>Sleepnice</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/كيد فيرست سوشال ميديا.png" alt="كيد فيرست"><figcaption><span>سوشال</span><h3>كيد فيرست</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/نوفا ايفنت سوشال ميديا.png" alt="نوفا ايفنت"><figcaption><span>سوشال</span><h3>نوفا إيفنت</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/انشاء متجر NEE Makeup Milano.png" alt="NEE Makeup Milano"><figcaption><span>متجر وسوشال</span><h3>NEE Makeup Milano</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/1سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/2سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
+                    <figure class="social-card reveal"><img src="سوشال ميديا/3سوشال ميديا.png" alt="تصميم سوشال ميديا"><figcaption><span>تصميم</span><h3>نماذج محتوى</h3></figcaption></figure>
                 </div>
             </div>
         </section>
@@ -1369,7 +2732,7 @@
                 </div>
             </div>
             <div class="logo-band reveal">
-                <div class="logo-marquee">
+                <div class="logo-grid">
                     <span class="logo-item"><img src="لوقو العملاء/dail.png" alt="شعار عميل"></span>
                     <span class="logo-item"><img src="لوقو العملاء/2000x2000.png" alt="شعار عميل"></span>
                     <span class="logo-item"><img src="لوقو العملاء/2000 x1000.png" alt="شعار عميل"></span>
@@ -1392,12 +2755,6 @@
                     <span class="logo-item"><img src="لوقو العملاء/عشاق العطور.jpeg" alt="شعار عميل"></span>
                     <span class="logo-item"><img src="لوقو العملاء/نعناع.png" alt="شعار عميل"></span>
                     <span class="logo-item"><img src="لوقو العملاء/هدايا جدة.avif" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/dail.png" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/2000x2000.png" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/2000 x1000.png" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/1080 x 1920.png" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/1.png" alt="شعار عميل"></span>
-                    <span class="logo-item"><img src="لوقو العملاء/تصميم بدون عنوان.png" alt="شعار عميل"></span>
                 </div>
             </div>
         </section>
@@ -1412,39 +2769,58 @@
                     <p>قوالب عملية تساعد على تنظيم المحتوى وتحليل الإعلانات بطريقة أوضح.</p>
                 </div>
 
-                <div class="download-grid">
-                    <a class="download-card reveal" href="ملفات مجانية/social media.xlsx" download>
-                        <span class="download-icon"><i class="fa-solid fa-table-cells-large"></i></span>
-                        <span>
-                            <h3>ملف Social Media</h3>
-                            <p>قالب لتنظيم محتوى وإدارة حسابات السوشال ميديا.</p>
-                        </span>
-                        <i class="fa-solid fa-download"></i>
-                    </a>
-                    <a class="download-card reveal" href="ملفات مجانية/Google Ads نموذج التحليل والبيانات.xlsx" download>
-                        <span class="download-icon"><i class="fa-solid fa-chart-simple"></i></span>
-                        <span>
-                            <h3>نموذج Google Ads</h3>
-                            <p>ملف تحليل وبيانات للحملات الإعلانية المدفوعة.</p>
-                        </span>
-                        <i class="fa-solid fa-download"></i>
-                    </a>
-                    <a class="download-card reveal" href="لوقو العملاء/Nilam-Arabic.pdf" target="_blank">
-                        <span class="download-icon"><i class="fa-solid fa-file-pdf"></i></span>
-                        <span>
-                            <h3>ملف هوية Nilam</h3>
-                            <p>نموذج PDF من ملفات شعارات وهوية العملاء.</p>
-                        </span>
-                        <i class="fa-solid fa-up-right-from-square"></i>
-                    </a>
-                    <a class="download-card reveal" href="لوقو العملاء/دهليز.pdf" target="_blank">
-                        <span class="download-icon"><i class="fa-solid fa-file-pdf"></i></span>
-                        <span>
-                            <h3>ملف هوية دهليز</h3>
-                            <p>عرض إضافي للهوية البصرية من ملفات العملاء.</p>
-                        </span>
-                        <i class="fa-solid fa-up-right-from-square"></i>
-                    </a>
+                <div class="freebies-panel">
+                    <article class="newsletter-card reveal">
+                        <div class="newsletter-head">
+                            <span class="download-icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+                            <div>
+                                <h3>اشترك بالنشرة البريدية</h3>
+                                <p>اكتب بريد إلكتروني صحيح لتظهر لك روابط تحميل الملفات المجانية.</p>
+                            </div>
+                        </div>
+
+                        <form class="newsletter-form" novalidate>
+                            <div class="form-message" role="status" aria-live="polite">
+                                <i class="fa-solid fa-check"></i>
+                                <span>
+                                    <strong>تم التحقق من البريد</strong>
+                                    <span>يمكنك الآن تحميل ملفات Social Media و Google Ads.</span>
+                                </span>
+                            </div>
+
+                            <div class="field">
+                                <label for="newsletter-email">البريد الإلكتروني</label>
+                                <input id="newsletter-email" name="newsletter_email" type="email" placeholder="name@example.com" autocomplete="email" required data-email-guard="true">
+                                <span class="field-error"></span>
+                            </div>
+
+                            <button class="btn" type="submit"><i class="fa-solid fa-lock-open"></i> إظهار الملفات</button>
+                        </form>
+
+                        <div class="newsletter-files" aria-label="الملفات المجانية">
+                            <span><i class="fa-solid fa-table-cells-large"></i> Social Media</span>
+                            <span><i class="fa-solid fa-chart-simple"></i> Google Ads</span>
+                        </div>
+
+                        <div class="newsletter-downloads" aria-label="تحميل الملفات المجانية">
+                            <a class="download-card" href="ملفات مجانية/social media.xlsx" download>
+                                <span class="download-icon"><i class="fa-solid fa-table-cells-large"></i></span>
+                                <span>
+                                    <h3>ملف Social Media</h3>
+                                    <p>قالب لتنظيم محتوى وإدارة حسابات السوشال ميديا.</p>
+                                </span>
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                            <a class="download-card" href="ملفات مجانية/Google Ads نموذج التحليل والبيانات.xlsx" download>
+                                <span class="download-icon"><i class="fa-solid fa-chart-simple"></i></span>
+                                <span>
+                                    <h3>نموذج Google Ads</h3>
+                                    <p>ملف تحليل وبيانات للحملات الإعلانية المدفوعة.</p>
+                                </span>
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -1570,6 +2946,9 @@
             if (input.type === "email" && input.validity.typeMismatch) {
                 return "اكتب بريد إلكتروني صحيح.";
             }
+            if (input.validity.customError) {
+                return input.validationMessage;
+            }
             if (input.validity.tooShort) {
                 return `اكتب على الأقل ${input.minLength} أحرف.`;
             }
@@ -1587,6 +2966,57 @@
             field.classList.toggle("is-invalid", Boolean(message));
             error.textContent = message;
             return !message;
+        }
+
+        const blockedNewsletterDomains = new Set([
+            "example.com",
+            "example.net",
+            "example.org",
+            "test.com",
+            "fake.com",
+            "invalid.com",
+            "mailinator.com",
+            "10minutemail.com",
+            "tempmail.com",
+            "temp-mail.org",
+            "yopmail.com",
+            "guerrillamail.com",
+            "sharklasers.com",
+            "getnada.com",
+            "throwawaymail.com"
+        ]);
+
+        function fakeEmailMessage(input) {
+            const email = input.value.trim().toLowerCase();
+            const [localPart = "", domain = ""] = email.split("@");
+
+            if (blockedNewsletterDomains.has(domain)) {
+                return "استخدم بريد حقيقي، لا يمكن قبول الإيميلات التجريبية أو المؤقتة.";
+            }
+
+            if (/^(test|fake|demo|sample|email|name|user|admin|qwerty|asdf)\d*$/.test(localPart)) {
+                return "استخدم بريدك الحقيقي حتى تظهر روابط التحميل.";
+            }
+
+            return "";
+        }
+
+        function validateNewsletterEmail(input) {
+            input.setCustomValidity("");
+
+            if (!validateField(input)) {
+                return false;
+            }
+
+            const message = fakeEmailMessage(input);
+
+            if (message) {
+                input.setCustomValidity(message);
+                validateField(input);
+                return false;
+            }
+
+            return true;
         }
 
         projectForm.querySelectorAll("input, select, textarea").forEach((input) => {
@@ -1615,6 +3045,39 @@
             consultationDate.min = todayValue;
             formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
         });
+
+        const newsletterForm = document.querySelector(".newsletter-form");
+
+        if (newsletterForm) {
+            const newsletterMessage = newsletterForm.querySelector(".form-message");
+            const newsletterEmail = newsletterForm.querySelector("input[type='email']");
+            const newsletterDownloads = document.querySelector(".newsletter-downloads");
+
+            newsletterEmail.addEventListener("blur", () => validateNewsletterEmail(newsletterEmail));
+            newsletterEmail.addEventListener("input", () => {
+                newsletterEmail.setCustomValidity("");
+                newsletterMessage.classList.remove("is-visible");
+                newsletterDownloads?.classList.remove("is-visible");
+                if (newsletterEmail.closest(".field").classList.contains("is-invalid")) {
+                    validateField(newsletterEmail);
+                }
+            });
+
+            newsletterForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                newsletterMessage.classList.remove("is-visible");
+                newsletterDownloads?.classList.remove("is-visible");
+
+                if (!validateNewsletterEmail(newsletterEmail)) {
+                    newsletterEmail.focus();
+                    return;
+                }
+
+                newsletterMessage.classList.add("is-visible");
+                newsletterDownloads?.classList.add("is-visible");
+                newsletterForm.reset();
+            });
+        }
 
         const heroCanvas = document.getElementById("hero-web");
         const heroCtx = heroCanvas.getContext("2d");
@@ -1693,6 +3156,67 @@
         resizeHeroCanvas();
         drawHeroWeb();
 
+        const hero = document.querySelector(".hero");
+        const kineticWords = [...document.querySelectorAll(".kinetic-word")];
+        const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (hero && kineticWords.length && !reducedMotionQuery.matches) {
+            const pointerState = {
+                x: 0,
+                y: 0,
+                targetX: 0,
+                targetY: 0
+            };
+            let kineticFrame = null;
+
+            function renderKineticWords() {
+                pointerState.x += (pointerState.targetX - pointerState.x) * 0.12;
+                pointerState.y += (pointerState.targetY - pointerState.y) * 0.12;
+
+                kineticWords.forEach((word) => {
+                    const depth = Number(word.dataset.depth || 36);
+                    const spin = Number(word.dataset.spin || 4);
+                    const x = pointerState.x * depth;
+                    const y = pointerState.y * depth;
+                    const rotate = pointerState.x * spin;
+                    word.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg)`;
+                });
+
+                const settled =
+                    Math.abs(pointerState.targetX - pointerState.x) < 0.002 &&
+                    Math.abs(pointerState.targetY - pointerState.y) < 0.002;
+
+                if (settled) {
+                    kineticFrame = null;
+                    return;
+                }
+
+                kineticFrame = requestAnimationFrame(renderKineticWords);
+            }
+
+            function scheduleKineticWords() {
+                if (kineticFrame === null) {
+                    kineticFrame = requestAnimationFrame(renderKineticWords);
+                }
+            }
+
+            hero.addEventListener("pointermove", (event) => {
+                if (event.pointerType === "touch") return;
+                const rect = hero.getBoundingClientRect();
+                const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
+                const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
+                pointerState.targetX = normalizedX * -2;
+                pointerState.targetY = normalizedY * -2;
+                scheduleKineticWords();
+            }, { passive: true });
+
+            hero.addEventListener("pointerleave", () => {
+                pointerState.targetX = 0;
+                pointerState.targetY = 0;
+                scheduleKineticWords();
+            });
+        }
+
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.utils.toArray(".reveal").forEach((item, index) => {
@@ -1709,7 +3233,146 @@
             });
         });
 
-        gsap.utils.toArray(".work-card, .campaign-card, .testimonial-card, .service-card, .download-card").forEach((card) => {
+        const projectStory = document.querySelector("[data-project-story]");
+
+        if (projectStory) {
+            const projectPanels = [...projectStory.querySelectorAll("[data-project-panel]")];
+            const projectTexts = [...projectStory.querySelectorAll("[data-project-text]")];
+            const projectSteps = [...projectStory.querySelectorAll("[data-project-step]")];
+            const projectCounter = projectStory.querySelector("[data-project-counter]");
+            let activeProjectIndex = 0;
+
+            function setActiveProject(index) {
+                const nextIndex = Math.max(0, Math.min(projectPanels.length - 1, index));
+                if (nextIndex === activeProjectIndex && projectPanels[nextIndex].classList.contains("is-active")) return;
+
+                activeProjectIndex = nextIndex;
+
+                projectPanels.forEach((panel, panelIndex) => {
+                    panel.classList.toggle("is-active", panelIndex === nextIndex);
+                });
+
+                projectTexts.forEach((text, textIndex) => {
+                    text.classList.toggle("is-active", textIndex === nextIndex);
+                });
+
+                projectSteps.forEach((step, stepIndex) => {
+                    const isActive = stepIndex === nextIndex;
+                    step.classList.toggle("is-active", isActive);
+                    if (isActive) {
+                        step.setAttribute("aria-current", "true");
+                    } else {
+                        step.removeAttribute("aria-current");
+                    }
+                });
+
+                if (projectCounter) {
+                    projectCounter.textContent = `${String(nextIndex + 1).padStart(2, "0")} / ${String(projectPanels.length).padStart(2, "0")}`;
+                }
+
+                const activeImage = projectPanels[nextIndex]?.querySelector("img");
+                if (activeImage && !reducedMotionQuery.matches) {
+                    gsap.fromTo(activeImage,
+                        { scale: 0.985, y: 12 },
+                        { scale: 1, y: 0, duration: 0.65, ease: "power3.out", overwrite: true }
+                    );
+                }
+            }
+
+            setActiveProject(0);
+
+            projectSteps.forEach((step) => {
+                step.addEventListener("click", () => {
+                    const index = Number(step.dataset.projectStep || 0);
+                    const storyTop = projectStory.getBoundingClientRect().top + window.scrollY;
+                    const scrollable = Math.max(1, projectStory.offsetHeight - window.innerHeight);
+                    const progress = projectPanels.length <= 1 ? 0 : index / (projectPanels.length - 1);
+                    window.scrollTo({
+                        top: storyTop + scrollable * progress,
+                        behavior: reducedMotionQuery.matches ? "auto" : "smooth"
+                    });
+                    setActiveProject(index);
+                });
+            });
+
+            ScrollTrigger.create({
+                trigger: projectStory,
+                start: "top top+=88",
+                end: "bottom bottom",
+                scrub: 0.35,
+                invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    const index = Math.round(self.progress * (projectPanels.length - 1));
+                    setActiveProject(index);
+                }
+            });
+        }
+
+        const storeLab = document.querySelector("[data-store-lab]");
+
+        if (storeLab) {
+            const storeImage = storeLab.querySelector("[data-store-image]");
+            const storeScreen = storeLab.querySelector("[data-store-screen]");
+            const storeIndex = storeLab.querySelector("[data-store-index]");
+            const storeCategory = storeLab.querySelector("[data-store-category]");
+            const storeTitle = storeLab.querySelector("[data-store-title]");
+            const storeDescription = storeLab.querySelector("[data-store-description]");
+            const storeChips = storeLab.querySelector("[data-store-chips]");
+            const storeUrl = storeLab.querySelector("[data-store-url]");
+            const storePicks = [...storeLab.querySelectorAll("[data-store-pick]")];
+            let activeStoreIndex = 0;
+
+            function setActiveStore(index) {
+                const nextIndex = Math.max(0, Math.min(storePicks.length - 1, index));
+                const pick = storePicks[nextIndex];
+                if (!pick || nextIndex === activeStoreIndex && pick.classList.contains("is-active")) return;
+
+                activeStoreIndex = nextIndex;
+                storePicks.forEach((item, itemIndex) => {
+                    const isActive = itemIndex === nextIndex;
+                    item.classList.toggle("is-active", isActive);
+                    if (isActive) {
+                        item.setAttribute("aria-current", "true");
+                    } else {
+                        item.removeAttribute("aria-current");
+                    }
+                });
+
+                storeScreen?.classList.add("is-swapping");
+
+                setTimeout(() => {
+                    storeImage.src = pick.dataset.src;
+                    storeImage.alt = pick.dataset.title || "متجر إلكتروني";
+                    storeTitle.textContent = pick.dataset.title || "";
+                    storeCategory.textContent = pick.dataset.category || "";
+                    storeDescription.textContent = pick.dataset.description || "";
+                    storeUrl.textContent = pick.dataset.url || "";
+                    storeIndex.textContent = `${String(nextIndex + 1).padStart(2, "0")} / ${String(storePicks.length).padStart(2, "0")}`;
+
+                    storeChips.innerHTML = "";
+                    (pick.dataset.chips || "").split("|").filter(Boolean).forEach((chip) => {
+                        const item = document.createElement("span");
+                        item.textContent = chip;
+                        storeChips.appendChild(item);
+                    });
+
+                    storeScreen?.classList.remove("is-swapping");
+
+                    if (!reducedMotionQuery.matches) {
+                        gsap.fromTo(storeImage,
+                            { y: 16, scale: 0.985, opacity: 0.5 },
+                            { y: 0, scale: 1, opacity: 1, duration: 0.48, ease: "power3.out", overwrite: true }
+                        );
+                    }
+                }, reducedMotionQuery.matches ? 0 : 180);
+            }
+
+            storePicks.forEach((pick, index) => {
+                pick.addEventListener("click", () => setActiveStore(index));
+            });
+        }
+
+        gsap.utils.toArray(".work-card, .social-card, .campaign-card, .testimonial-card, .service-card, .download-card").forEach((card) => {
             card.addEventListener("mousemove", (event) => {
                 const rect = card.getBoundingClientRect();
                 const x = (event.clientX - rect.left) / rect.width - 0.5;
@@ -1802,11 +3465,13 @@
             track.addEventListener("pointermove", (event) => {
                 if (!isDragging) return;
                 const delta = event.clientX - startX;
-                if (Math.abs(delta) > 5) {
+                if (Math.abs(delta) > 10) {
                     dragStarted = true;
                     track.dataset.dragged = "true";
                 }
-                track.scrollLeft = startScrollLeft - delta;
+                if (dragStarted) {
+                    track.scrollLeft = startScrollLeft - delta;
+                }
             });
 
             function endDrag(event) {
@@ -1839,7 +3504,7 @@
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImage = lightbox.querySelector("img");
         const lightboxClose = lightbox.querySelector(".lightbox-close");
-        const zoomableItems = ".work-card, .campaign-card, .testimonial-card, .hero-card, .logo-item";
+        const zoomableItems = ".project-media, .store-main-media, .work-card, .social-card, .campaign-card, .testimonial-card, .hero-card, .logo-item";
 
         function openLightboxFromImage(image) {
             lightboxImage.src = image.currentSrc || image.src;
