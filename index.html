@@ -3321,6 +3321,8 @@
             const storeUrl = storeLab.querySelector("[data-store-url]");
             const storePicks = [...storeLab.querySelectorAll("[data-store-pick]")];
             let activeStoreIndex = 0;
+            let storeAutoTimer = null;
+            let storeResumeTimer = null;
 
             function setActiveStore(index) {
                 const nextIndex = Math.max(0, Math.min(storePicks.length - 1, index));
@@ -3368,8 +3370,43 @@
             }
 
             storePicks.forEach((pick, index) => {
-                pick.addEventListener("click", () => setActiveStore(index));
+                pick.addEventListener("click", () => {
+                    pauseStoreAuto();
+                    setActiveStore(index);
+                });
             });
+
+            function startStoreAuto() {
+                clearInterval(storeAutoTimer);
+                if (storePicks.length < 2) return;
+                storeAutoTimer = setInterval(() => {
+                    setActiveStore((activeStoreIndex + 1) % storePicks.length);
+                }, 4200);
+            }
+
+            function pauseStoreAuto() {
+                clearInterval(storeAutoTimer);
+                clearTimeout(storeResumeTimer);
+                storeResumeTimer = setTimeout(startStoreAuto, 7600);
+            }
+
+            storeLab.addEventListener("mouseenter", () => {
+                clearInterval(storeAutoTimer);
+                clearTimeout(storeResumeTimer);
+            });
+
+            storeLab.addEventListener("mouseleave", startStoreAuto);
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    clearInterval(storeAutoTimer);
+                    clearTimeout(storeResumeTimer);
+                } else {
+                    startStoreAuto();
+                }
+            });
+
+            startStoreAuto();
         }
 
         gsap.utils.toArray(".work-card, .social-card, .campaign-card, .testimonial-card, .service-card, .download-card").forEach((card) => {
