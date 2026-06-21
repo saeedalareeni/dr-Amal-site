@@ -576,8 +576,16 @@
         border: 1px solid rgba(180, 83, 9, 0.13);
         border-radius: var(--radius);
         background:
-          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.96), transparent 72%),
-          linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(244, 239, 231, 0.72));
+          radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.96),
+            transparent 72%
+          ),
+          linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.84),
+            rgba(244, 239, 231, 0.72)
+          );
         box-shadow: 0 26px 76px rgba(23, 20, 18, 0.1);
         backdrop-filter: blur(16px);
       }
@@ -587,7 +595,9 @@
         min-width: 0;
         padding: clamp(24px, 3vw, 38px);
         border-left: 1px solid var(--line);
-        transition: background 0.3s ease, transform 0.3s ease;
+        transition:
+          background 0.3s ease,
+          transform 0.3s ease;
       }
 
       .impact-stat:last-child {
@@ -602,10 +612,17 @@
         left: 18%;
         height: 3px;
         border-radius: 999px 999px 0 0;
-        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
         opacity: 0;
         transform: scaleX(0.5);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
       }
 
       .impact-stat:hover {
@@ -2748,7 +2765,7 @@
 
       .cover {
         object-fit: cover !important;
-        width: 100% ! IMPORTANT;
+        width: 100% !important;
         height: 100% !important;
       }
     </style>
@@ -3210,28 +3227,36 @@
       <section class="impact-stats" aria-label="أرقام الخبرة والإنجازات">
         <div class="impact-stats-inner reveal">
           <article class="impact-stat">
-            <span class="impact-stat-icon" aria-hidden="true"><i class="fa-solid fa-award"></i></span>
+            <span class="impact-stat-icon" aria-hidden="true"
+              ><i class="fa-solid fa-award"></i
+            ></span>
             <div class="impact-stat-value">
               <strong data-stat-target="8">8</strong><small>+</small>
             </div>
             <p>سنوات خبرة عملية</p>
           </article>
           <article class="impact-stat">
-            <span class="impact-stat-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span>
+            <span class="impact-stat-icon" aria-hidden="true"
+              ><i class="fa-solid fa-chart-line"></i
+            ></span>
             <div class="impact-stat-value">
               <strong data-stat-target="18">18</strong><small>M+</small>
             </div>
             <p>ريال ميزانيات إعلانية مُدارة</p>
           </article>
           <article class="impact-stat">
-            <span class="impact-stat-icon" aria-hidden="true"><i class="fa-solid fa-store"></i></span>
+            <span class="impact-stat-icon" aria-hidden="true"
+              ><i class="fa-solid fa-store"></i
+            ></span>
             <div class="impact-stat-value">
               <strong data-stat-target="43">43</strong><small>+</small>
             </div>
             <p>متجر إلكتروني</p>
           </article>
           <article class="impact-stat">
-            <span class="impact-stat-icon" aria-hidden="true"><i class="fa-solid fa-eye"></i></span>
+            <span class="impact-stat-icon" aria-hidden="true"
+              ><i class="fa-solid fa-eye"></i
+            ></span>
             <div class="impact-stat-value">
               <strong data-stat-target="24">24</strong><small>M+</small>
             </div>
@@ -3681,7 +3706,7 @@
                 data-chips="عرض واسع|Visual Focus|تجربة شراء"
               >
                 <img src="انشاء متاجر الكترونية/folaz.JPEG" alt="" />
-                <strong>Folaz</strong>
+                <strong>Folath</strong>
                 <span>Visual Store</span>
               </button>
             </div>
@@ -3694,10 +3719,11 @@
           <div class="section-head reveal">
             <div>
               <span class="kicker">سوشال ميديا</span>
-              <h2>محتوى بصري يحافظ على هوية كل علامة</h2>
+              <h2>محتوى يعكس هوية العلامة ويعزز حضورها الرقمي</h2>
             </div>
             <p>
-              تصاميم وحسابات تعكس نبرة كل علامة وتبني حضورها اليومي على المنصات.
+              أساعد العلامات التجارية على بناء حضور رقمي احترافي من خلال محتوى
+              يعكس هويتها، ويعزز التواصل مع الجمهور، ويدعم أهدافها التسويقية.
             </p>
           </div>
 
@@ -3957,7 +3983,10 @@
               ><img src="لوقو العملاء/نعناع.png" alt="شعار عميل"
             /></span>
             <span class="logo-item"
-              ><img src="لوقو العملاء/هدايا جدة.avif" alt="شعار عميل" class="cover"
+              ><img
+                src="لوقو العملاء/هدايا جدة.avif"
+                alt="شعار عميل"
+                class="cover"
             /></span>
           </div>
         </div>
