@@ -1,0 +1,15 @@
+@php
+    $isAssoc=is_array($value) && array_keys($value)!==range(0,count($value)-1);
+    $isTranslation=is_array($value) && array_key_exists('ar',$value) && array_key_exists('en',$value) && count(array_diff(array_keys($value),['ar','en']))===0;
+    $labelMap=['brand'=>'الهوية','navigation'=>'القائمة','hero'=>'الواجهة الرئيسية','platforms'=>'المنصات','stats'=>'الإحصاءات','headings'=>'عناوين الأقسام','services'=>'الخدمات','cases'=>'دراسات الحالة','stores'=>'المتاجر','social'=>'السوشال ميديا','testimonials'=>'آراء العملاء','audio'=>'الصوتيات','logos'=>'الشعارات','freebies'=>'الملفات المجانية','newsletter'=>'النشرة','contact'=>'التواصل','title'=>'العنوان','description'=>'الوصف','intro'=>'المقدمة','label'=>'التسمية','image'=>'الصورة','visible'=>'ظاهر','order'=>'الترتيب','name'=>'الاسم','url'=>'الرابط','icon'=>'الأيقونة','alt'=>'النص البديل','subtitle'=>'العنوان الفرعي','badge'=>'الشارة','metrics'=>'الأرقام','tags'=>'الوسوم','file'=>'الملف','button'=>'نص الزر','kicker'=>'الترويسة','words'=>'الكلمات المتحركة','chips'=>'الخصائص'];
+    $label=$labelMap[(string)$key]??str_replace('_',' ',(string)$key);
+@endphp
+@if($isTranslation)
+<div class="grid gap-3 md:grid-cols-2"><label><span class="admin-label">{{ $label }} - عربي</span><textarea class="admin-input min-h-24" name="{{ $prefix }}[{{ $key }}][ar]" required>{{ $value['ar'] }}</textarea></label><label dir="ltr"><span class="admin-label text-left">{{ $label }} - English</span><textarea class="admin-input min-h-24 text-left" name="{{ $prefix }}[{{ $key }}][en]" required>{{ $value['en'] }}</textarea></label></div>
+@elseif(is_bool($value))
+<label class="flex items-center gap-2 rounded-xl bg-slate-50 p-3"><input type="hidden" name="{{ $prefix }}[{{ $key }}]" value="0"><input type="checkbox" name="{{ $prefix }}[{{ $key }}]" value="1" @checked($value)><span class="font-bold">{{ $label }}</span></label>
+@elseif(is_array($value))
+<details class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4" {{ $loop->depth < 2 ? 'open' : '' }}><summary class="cursor-pointer font-extrabold text-slate-700">{{ $label }} <small class="text-slate-400">({{ count($value) }})</small></summary><div class="mt-4 space-y-4">@foreach($value as $childKey=>$childValue)@include('admin.partials.content-field',['key'=>$childKey,'value'=>$childValue,'prefix'=>$prefix.'['.$key.']'])@endforeach</div></details>
+@else
+<label class="block"><span class="admin-label">{{ $label }}</span>@if(is_string($value) && (mb_strlen($value)>80 || str_contains((string)$key,'description')))<textarea class="admin-input min-h-24" name="{{ $prefix }}[{{ $key }}]">{{ $value }}</textarea>@else<input class="admin-input" name="{{ $prefix }}[{{ $key }}]" value="{{ $value }}" @if($key==='order') type="number" @endif>@endif @if(is_string($value) && str_starts_with($value,'media/') && preg_match('/\.(jpe?g|png|webp|avif|gif|svg)$/i',$value))<img class="mt-2 h-24 rounded-xl border bg-white object-contain" src="{{ Storage::disk('public')->url($value) }}" alt="">@endif</label>
+@endif

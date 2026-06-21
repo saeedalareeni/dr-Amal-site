@@ -1,0 +1,7 @@
+*
+!.gitignore
+!media/
+!media/source/
+!media/source/**
+!media/variants/
+!media/variants/**
