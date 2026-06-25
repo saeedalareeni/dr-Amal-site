@@ -52,6 +52,38 @@ final class LegacyMediaImporter
         return compact('imported', 'verified', 'variants');
     }
 
+    public function syncPublicStorage(): array
+    {
+        $synced = 0;
+
+        foreach (Storage::disk('public')->allFiles('media/source') as $path) {
+            if (MediaAsset::where('path', $path)->exists()) {
+                continue;
+            }
+
+            $contents = Storage::disk('public')->get($path);
+            $originalName = basename(str_replace('\\', '/', $path));
+
+            MediaAsset::create([
+                'disk' => 'public',
+                'path' => $path,
+                'original_name' => $originalName,
+                'mime_type' => Storage::disk('public')->mimeType($path) ?: 'application/octet-stream',
+                'size' => Storage::disk('public')->size($path),
+                'checksum' => hash('sha256', $contents),
+                'alt' => [
+                    'ar' => pathinfo($originalName, PATHINFO_FILENAME),
+                    'en' => pathinfo($originalName, PATHINFO_FILENAME),
+                ],
+                'metadata' => ['source' => str_replace('media/source/', '', $path)],
+            ]);
+
+            $synced++;
+        }
+
+        return compact('synced');
+    }
+
     private function copyPublic(string $source, string $relative): array
     {
         $path = 'media/source/'.$relative;

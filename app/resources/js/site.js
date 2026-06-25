@@ -708,7 +708,7 @@ const loader = document.getElementById("loader");
       const lightboxImage = lightbox.querySelector("img");
       const lightboxClose = lightbox.querySelector(".lightbox-close");
       const zoomableItems =
-        ".result-case-media, .store-main-media, .work-card, .social-slide, .testimonial-card, .hero-card, .logo-item";
+        ".result-case-media, .store-main-media, .work-card, .social-slide, .testimonial-card, .logo-item";
 
       function openLightboxFromImage(image) {
         lightboxImage.src = image.currentSrc || image.src;

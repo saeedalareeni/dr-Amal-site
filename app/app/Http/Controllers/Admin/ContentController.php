@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MediaAsset;
 use App\Models\Page;
 use App\Models\PageVersion;
 use App\Services\ActivityLogger;
+use App\Services\LegacyMediaImporter;
 use App\Services\ThemeValidator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,13 +20,19 @@ class ContentController extends Controller
 {
     public function edit(): View
     {
-        $page = Page::where('slug', 'home')->with('versions')->firstOrFail();
-        return view('admin.content', ['pageModel' => $page, 'version' => $this->draft($page), 'themeDefaults' => ThemeValidator::DEFAULTS]);
+        $page = $this->homePage()->load('versions');
+
+        return view('admin.content', [
+            'pageModel' => $page,
+            'version' => $this->draft($page),
+            'themeDefaults' => ThemeValidator::DEFAULTS,
+            'mediaAssets' => $this->mediaAssets(),
+        ]);
     }
 
     public function update(Request $request, ThemeValidator $themeValidator): RedirectResponse
     {
-        $page = Page::where('slug', 'home')->firstOrFail();
+        $page = $this->homePage();
         $content = $request->input('content', []);
         $seo = $request->input('seo', []);
         $theme = $themeValidator->validate($request->input('theme', []));
@@ -39,7 +47,7 @@ class ContentController extends Controller
 
     public function publish(): RedirectResponse
     {
-        $page = Page::where('slug', 'home')->firstOrFail();
+        $page = $this->homePage();
         $draft = $this->draft($page);
         DB::transaction(function () use ($page, $draft) {
             PageVersion::whereKey($page->published_version_id)->update(['status' => 'archived']);
@@ -53,7 +61,7 @@ class ContentController extends Controller
 
     public function restore(PageVersion $version): RedirectResponse
     {
-        $page = Page::where('slug', 'home')->firstOrFail();
+        $page = $this->homePage();
         abort_unless($version->page_id === $page->id, 404);
         $draft = $this->draft($page);
         $draft->update(['content' => $version->content, 'theme' => $version->theme, 'seo' => $version->seo]);
@@ -68,6 +76,41 @@ class ContentController extends Controller
             'content' => $page->publishedVersion->content, 'theme' => $page->publishedVersion->theme,
             'seo' => $page->publishedVersion->seo, 'created_by' => auth()->id(),
         ]);
+    }
+
+    private function homePage(): Page
+    {
+        $page = Page::firstOrCreate(['slug' => 'home']);
+
+        if (! $page->published_version_id || ! $page->publishedVersion()->exists()) {
+            $defaults = config('site_content');
+            $version = $page->versions()->create([
+                'version' => 1,
+                'status' => 'published',
+                'content' => $defaults['content'],
+                'theme' => $defaults['theme'],
+                'seo' => $defaults['seo'],
+                'created_by' => auth()->id(),
+                'published_at' => now(),
+            ]);
+
+            $page->update(['published_version_id' => $version->id]);
+        }
+
+        return $page->loadMissing('publishedVersion');
+    }
+
+    private function mediaAssets()
+    {
+        if (! MediaAsset::exists()) {
+            $importer = app(LegacyMediaImporter::class);
+            $importer->import();
+            $importer->syncPublicStorage();
+        }
+
+        return MediaAsset::query()
+            ->latest()
+            ->get(['id', 'path', 'original_name', 'mime_type', 'disk', 'alt']);
     }
 
     private function assertTranslations(array $data, string $path = 'content'): void

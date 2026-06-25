@@ -46,30 +46,132 @@
             @endforeach
         </div>
         <div class="hero-grid">
-            <div class="hero-copybox reveal"><span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> {{ $page->trans('hero.eyebrow') }}</span><h1>{{ $page->trans('hero.title') }}</h1><p class="hero-copy">{{ $page->trans('hero.description') }}</p><div class="hero-actions"><a class="btn" href="#work"><i class="fa-solid fa-border-all"></i> {{ $page->trans('hero.primary_button') }}</a><a class="btn secondary" href="#freebies"><i class="fa-solid fa-download"></i> {{ $page->trans('hero.secondary_button') }}</a></div></div>
-            <div class="hero-board reveal" aria-hidden="true"><div class="showcase-stack floaty"><figure class="hero-card big"><img src="{{ $page->media($page->get('hero.feature_image')) }}" alt=""></figure><figure class="hero-card small"><img src="{{ $page->media($page->get('hero.secondary_image')) }}" alt=""></figure><div class="hero-card metric"><div class="metric-grid">@foreach(array_slice($page->items('stats'),0,4) as $stat)<div class="metric-item"><strong>{{ $stat['value'] }}{{ $stat['suffix'] }}</strong><span>{{ $l($stat['label']) }}</span></div>@endforeach</div></div></div></div>
+            <div class="hero-copybox reveal"><span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> {{ $page->trans('hero.eyebrow') }}</span><h1>{{ $page->trans('hero.title') }}</h1><p class="hero-copy">{{ $page->trans('hero.description') }}</p><div class="hero-actions"><a class="btn" href="#{{ $page->get('hero.primary_anchor', 'contact') }}"><i class="fa-solid fa-calendar-check"></i> {{ $page->trans('hero.primary_button') }}</a><a class="btn secondary" href="#{{ $page->get('hero.secondary_anchor', 'work') }}"><i class="fa-solid fa-border-all"></i> {{ $page->trans('hero.secondary_button') }}</a></div></div>
         </div>
     </header>
 
     <section class="marketing-platforms" aria-label="Marketing platforms"><div class="platform-strip reveal">@foreach($page->items('platforms') as $platform)<a class="platform-logo" href="{{ $platform['url'] }}" target="_blank" rel="noopener"><span class="platform-mark"><i class="{{ $platform['icon'] }}"></i></span><span class="platform-copy"><strong>{{ $platform['name'] }}</strong></span></a>@endforeach</div></section>
     <section class="impact-stats" aria-label="Statistics"><div class="impact-stats-inner reveal">@foreach($page->items('stats') as $stat)<article class="impact-stat"><span class="impact-stat-icon"><i class="{{ $stat['icon'] }}"></i></span><div class="impact-stat-value"><strong data-stat-target="{{ $stat['value'] }}">{{ $stat['value'] }}</strong><small>{{ $stat['suffix'] }}</small></div><p>{{ $l($stat['label']) }}</p></article>@endforeach</div></section>
 
+    @if($page->get('headings.why.visible', true))<section class="content-section" id="why"><div class="section-inner"><x-site.section-head :data="$page->get('headings.why')" :locale="$locale"/><div class="service-grid why-grid">@foreach($page->items('why') as $item)<article class="service-card reveal"><span class="icon"><i class="{{ $item['icon'] }}"></i></span><h3>{{ $l($item['title']) }}</h3><p>{{ $l($item['description']) }}</p></article>@endforeach</div></div></section>@endif
+
+    @if($page->get('expertise.visible', true))
+        <section class="content-section" id="expertise">
+            <div class="section-inner">
+                <article class="expertise-panel reveal">
+                    <div class="expertise-copy">
+                        <span class="kicker">{{ $page->trans('expertise.kicker') }}</span>
+                        <h2>{{ $page->trans('expertise.title') }}</h2>
+                        <p>{{ $page->trans('expertise.description') }}</p>
+                    </div>
+                    <div class="expertise-cards">
+                        @foreach($page->get('expertise.cards', []) as $card)
+                            <div class="expertise-card">
+                                <i class="{{ $card['icon'] }}"></i>
+                                <strong>{{ $card['value'] }}</strong>
+                                <span>{{ $l($card['label']) }}</span>
+                                <p>{{ $l($card['description']) }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="tool-cloud">
+                        @foreach($page->get('expertise.tools', []) as $tool)<span><i class="{{ $tool['icon'] }}"></i> {{ $tool['name'] }}</span>@endforeach
+                    </div>
+                </article>
+            </div>
+        </section>
+    @endif
+
     @if($page->get('headings.services.visible', true))<section class="content-section" id="services"><div class="section-inner"><x-site.section-head :data="$page->get('headings.services')" :locale="$locale"/><div class="service-grid">@foreach($page->items('services') as $service)<article class="service-card reveal"><span class="icon"><i class="{{ $service['icon'] }}"></i></span><h3>{{ $l($service['title']) }}</h3><p>{{ $l($service['description']) }}</p></article>@endforeach</div></div></section>@endif
 
-    @if($page->get('headings.work.visible', true))<section class="content-section" id="work"><div class="section-inner"><x-site.section-head :data="$page->get('headings.work')" :locale="$locale"/><div class="results-cases">@foreach($page->items('cases') as $case)<article class="result-case reveal"><div class="result-case-head"><div><h3>{{ $l($case['title']) }}</h3><p>{{ $l($case['subtitle']) }}</p></div><span class="result-case-badge">{{ $case['badge'] }}</span></div><div class="result-case-metrics">@foreach($case['metrics'] as $metric)<div><strong>{{ $l($metric['value']) }}</strong><span>{{ $l($metric['label']) }}</span></div>@endforeach</div><div class="result-case-tags">@foreach($case['tags'] as $tag)<span>{{ $tag }}</span>@endforeach</div><div class="result-case-gallery {{ count($case['images']) === 1 ? 'result-case-gallery-single' : 'result-case-gallery-featured' }}">@foreach($case['images'] as $image)<button class="result-case-media {{ $loop->first ? 'result-case-media-featured' : '' }}" type="button"><img src="{{ $page->media($image) }}" alt="{{ $l($case['title']) }}" loading="lazy"></button>@endforeach</div></article>@endforeach</div></div></section>@endif
+    @if($page->get('headings.work.visible', true))
+        <section class="content-section" id="work">
+            <div class="section-inner">
+                <x-site.section-head :data="$page->get('headings.work')" :locale="$locale"/>
+                <div class="results-cases">
+                    @foreach($page->items('cases') as $case)
+                        @php($caseImages = array_slice($case['images'] ?? [], 0, 3))
+                        @php($caseImageCaptions = array_slice($case['image_captions'] ?? [], 0, 3))
+                        <article class="result-case reveal">
+                            <div class="result-case-head">
+                                <div>
+                                    <h3>{{ $l($case['title']) }}</h3>
+                                    <p>{{ $l($case['subtitle']) }}</p>
+                                </div>
+                                <span class="result-case-badge">{{ $case['badge'] }}</span>
+                            </div>
+                            <div class="case-layout">
+                                <div class="case-story">
+                                    @if(!empty($case['description']))<p class="result-case-summary">{{ $l($case['description']) }}</p>@endif
+                                    @if(!empty($case['achievements']))
+                                        <div class="case-bullets">
+                                            @foreach($case['achievements'] as $achievement)<span><i class="fa-solid fa-check"></i>{{ $l($achievement) }}</span>@endforeach
+                                        </div>
+                                    @endif
+                                    @if(!empty($case['challenge']) || !empty($case['solution']))
+                                        <div class="case-notes">
+                                            @if(!empty($case['challenge']))<div><strong>{{ $locale === 'ar' ? 'التحدي' : 'Challenge' }}</strong><p>{{ $l($case['challenge']) }}</p></div>@endif
+                                            @if(!empty($case['solution']))<div><strong>{{ $locale === 'ar' ? 'الحل' : 'Solution' }}</strong><p>{{ $l($case['solution']) }}</p></div>@endif
+                                        </div>
+                                    @endif
+                                    <div class="result-case-metrics">
+                                        @foreach($case['metrics'] as $metric)<div><strong>{{ $l($metric['value']) }}</strong><span>{{ $l($metric['label']) }}</span></div>@endforeach
+                                    </div>
+                                    <div class="result-case-tags">
+                                        @foreach($case['tags'] as $tag)<span>{{ $tag }}</span>@endforeach
+                                    </div>
+                                </div>
+                                <div class="result-case-gallery {{ count($caseImages) === 1 ? 'result-case-gallery-single' : 'result-case-gallery-featured' }}">
+                                    @foreach($caseImages as $image)
+                                        @php($caption = $caseImageCaptions[$loop->index] ?? null)
+                                        <button class="result-case-media {{ $loop->first ? 'result-case-media-featured' : '' }} {{ !empty($caption) ? 'has-caption' : '' }}" type="button">
+                                            <img src="{{ $page->media($image) }}" alt="{{ $l($case['title']) }}" loading="lazy">
+                                            @if(!empty($caption))<span class="result-case-caption">{{ $l($caption) }}</span>@endif
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
 
     @php($stores=$page->items('stores'))
-    @if($page->get('headings.stores.visible', true) && count($stores))<section class="content-section" id="stores"><div class="section-inner"><x-site.section-head :data="$page->get('headings.stores')" :locale="$locale"/><div class="store-lab reveal" data-store-lab><article class="store-lab-details"><div><span class="store-index" data-store-index>01 / {{ str_pad(count($stores),2,'0',STR_PAD_LEFT) }}</span><span class="kicker" data-store-category>{{ $l($stores[0]['category']) }}</span><h3 data-store-title>{{ $l($stores[0]['title']) }}</h3><p data-store-description>{{ $l($stores[0]['description']) }}</p><div class="store-chips" data-store-chips>@foreach($stores[0]['chips'] as $chip)<span>{{ $chip }}</span>@endforeach</div></div><a class="btn secondary" href="#contact"><i class="fa-solid fa-paper-plane"></i> {{ $locale === 'ar' ? 'ابدأ متجر مشابه' : 'Start a similar store' }}</a></article><figure class="store-browser store-main-media"><div class="store-browser-bar"><span class="store-window-dots"><span></span><span></span><span></span></span><span class="store-url" data-store-url>{{ $stores[0]['url_label'] }}</span><i class="fa-solid fa-up-right-and-down-left-from-center"></i></div><div class="store-screen" data-store-screen><img src="{{ $page->media($stores[0]['image']) }}" alt="{{ $l($stores[0]['title']) }}" data-store-image></div></figure><div class="store-selector">@foreach($stores as $store)<button class="store-pick {{ $loop->first ? 'is-active' : '' }}" type="button" data-store-pick data-src="{{ $page->media($store['image']) }}" data-title="{{ $l($store['title']) }}" data-category="{{ $l($store['category']) }}" data-description="{{ $l($store['description']) }}" data-url="{{ $store['url_label'] }}" data-chips="{{ implode('|',$store['chips']) }}"><img src="{{ $page->media($store['image']) }}" alt=""><strong>{{ $l($store['title']) }}</strong><span>{{ $l($store['category']) }}</span></button>@endforeach</div></div></div></section>@endif
+    @if($page->get('headings.stores.visible', true) && count($stores))<section class="content-section" id="stores"><div class="section-inner"><x-site.section-head :data="$page->get('headings.stores')" :locale="$locale"/><div class="store-lab reveal" data-store-lab><article class="store-lab-details"><div><span class="store-index" data-store-index>01 / {{ str_pad(count($stores),2,'0',STR_PAD_LEFT) }}</span><span class="kicker" data-store-category>{{ $l($stores[0]['category']) }}</span><h3 data-store-title>{{ $l($stores[0]['title']) }}</h3><p data-store-description>{{ $l($stores[0]['description']) }}</p><div class="store-chips" data-store-chips>@foreach($stores[0]['chips'] as $chip)<span>{{ $l($chip) }}</span>@endforeach</div></div><a class="btn secondary" href="#contact"><i class="fa-solid fa-paper-plane"></i> {{ $locale === 'ar' ? 'ابدأ متجر مشابه' : 'Start a similar store' }}</a></article><figure class="store-browser store-main-media"><div class="store-browser-bar"><span class="store-window-dots"><span></span><span></span><span></span></span><span class="store-url" data-store-url>{{ $stores[0]['url_label'] }}</span><i class="fa-solid fa-up-right-and-down-left-from-center"></i></div><div class="store-screen" data-store-screen><img src="{{ $page->media($stores[0]['image']) }}" alt="{{ $l($stores[0]['title']) }}" data-store-image></div></figure><div class="store-selector">@foreach($stores as $store)<button class="store-pick {{ $loop->first ? 'is-active' : '' }}" type="button" data-store-pick data-src="{{ $page->media($store['image']) }}" data-title="{{ $l($store['title']) }}" data-category="{{ $l($store['category']) }}" data-description="{{ $l($store['description']) }}" data-url="{{ $store['url_label'] }}" data-chips="{{ implode('|', array_map($l, $store['chips'])) }}"><img src="{{ $page->media($store['image']) }}" alt=""><strong>{{ $l($store['title']) }}</strong><span>{{ $l($store['category']) }}</span></button>@endforeach</div></div></div></section>@endif
 
     @if($page->get('headings.social.visible', true))<section class="content-section" id="social"><div class="section-inner"><x-site.section-head :data="$page->get('headings.social')" :locale="$locale"/><div class="gallery-shell social-slider reveal"><button class="gallery-nav prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-right"></i></button><div class="gallery-track" tabindex="0">@foreach($page->items('social') as $item)<figure class="social-slide"><img src="{{ $page->media($item['image']) }}" alt="{{ $l($item['alt']) }}" loading="lazy"></figure>@endforeach</div><button class="gallery-nav next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-left"></i></button></div></div></section>@endif
 
     @if($page->get('headings.clients.visible', true))<section class="content-section" id="clients"><div class="section-inner"><x-site.section-head :data="$page->get('headings.clients')" :locale="$locale"/><div class="split-grid"><div class="testimonials-grid">@foreach($page->items('testimonials') as $item)<figure class="testimonial-card reveal"><img src="{{ $page->media($item['image']) }}" alt="{{ $l($item['alt']) }}" loading="lazy"></figure>@endforeach</div><div class="audio-list">@foreach($page->items('audio') as $audio)<article class="audio-card reveal"><div class="audio-title"><i class="fa-solid fa-volume-high"></i> {{ $l($audio['title']) }}</div><audio controls preload="none" src="{{ $page->media($audio['file']) }}"></audio></article>@endforeach</div></div></div></section>@endif
 
-    @if($page->get('headings.logos.visible', true))<section class="content-section" id="logos"><div class="section-inner"><x-site.section-head :data="$page->get('headings.logos')" :locale="$locale"/></div><div class="logo-band reveal"><div class="logo-grid">@foreach($page->items('logos') as $logo)<span class="logo-item"><img src="{{ $page->media($logo['image']) }}" alt="{{ $l($logo['alt']) }}" loading="lazy"></span>@endforeach</div></div></section>@endif
+    @if($page->get('headings.logos.visible', true))<section class="content-section" id="logos"><div class="section-inner"><x-site.section-head :data="$page->get('headings.logos')" :locale="$locale"/></div><div class="logo-band reveal"><div class="logo-grid">@foreach($page->items('logos') as $logo)<span class="logo-item {{ in_array($loop->iteration, [3, 4], true) ? 'is-logo-featured' : '' }}"><img src="{{ $page->media($logo['image']) }}" alt="{{ $l($logo['alt']) }}" loading="eager" decoding="async"></span>@endforeach</div></div></section>@endif
 
     @if($page->get('headings.freebies.visible', true))<section class="content-section" id="freebies"><div class="section-inner"><x-site.section-head :data="$page->get('headings.freebies')" :locale="$locale"/><div class="freebies-panel"><article class="newsletter-card reveal"><div class="newsletter-head"><span class="download-icon"><i class="fa-solid fa-envelope-open-text"></i></span><div><h3>{{ $page->trans('newsletter.title') }}</h3><p>{{ $page->trans('newsletter.description') }}</p></div></div><form class="newsletter-form" action="{{ route('subscribers.store') }}" novalidate>@csrf<input type="hidden" name="locale" value="{{ $locale }}"><input type="hidden" name="form_started" value="{{ now()->timestamp }}"><input class="hp-field" name="website" tabindex="-1" autocomplete="off"><div class="form-message" role="status"><i class="fa-solid fa-check"></i><span><strong></strong></span></div><div class="field"><label for="newsletter-email">{{ $locale === 'ar' ? 'البريد الإلكتروني' : 'Email address' }}</label><input id="newsletter-email" name="email" type="email" placeholder="name@example.com" required data-email-guard="true"><span class="field-error"></span></div><button class="btn" type="submit"><i class="fa-solid fa-envelope"></i> {{ $page->trans('newsletter.button') }}</button></form><div class="newsletter-files">@foreach($page->items('freebies') as $resource)<span><i class="{{ $resource['icon'] }}"></i> {{ $l($resource['title']) }}</span>@endforeach</div></article></div></div></section>@endif
 
-    <section class="content-section" id="contact"><div class="section-inner"><div class="contact-panel reveal"><div class="contact-note"><div><span class="kicker">{{ $page->trans('contact.kicker') }}</span><h2>{{ $page->trans('contact.title') }}</h2><p>{{ $page->trans('contact.description') }}</p></div><div class="hero-actions"><a class="btn" href="#top"><i class="fa-solid fa-arrow-up"></i> {{ $locale === 'ar' ? 'العودة للأعلى' : 'Back to top' }}</a></div></div><form class="project-form" action="{{ route('contact.store') }}" novalidate>@csrf<input type="hidden" name="locale" value="{{ $locale }}"><input type="hidden" name="form_started" value="{{ now()->timestamp }}"><input class="hp-field" name="website" tabindex="-1" autocomplete="off"><div class="form-message" role="status"><i class="fa-solid fa-check"></i><span><strong></strong></span></div><div class="field"><label for="client-name">{{ $locale === 'ar' ? 'الاسم الكامل' : 'Full name' }}</label><input id="client-name" name="name" type="text" required minlength="3"><span class="field-error"></span></div><div class="field"><label for="client-email">{{ $locale === 'ar' ? 'البريد الإلكتروني' : 'Email address' }}</label><input id="client-email" name="email" type="email" required><span class="field-error"></span></div><div class="field"><label for="consultation-date">{{ $locale === 'ar' ? 'موعد الاستشارة المقترح' : 'Preferred consultation date' }}</label><input id="consultation-date" name="consultation_date" type="date"><span class="field-error"></span></div><div class="field"><label for="service-type">{{ $locale === 'ar' ? 'نوع الخدمة' : 'Service' }}</label><select id="service-type" name="service" required><option value="">{{ $locale === 'ar' ? 'اختر الخدمة' : 'Choose a service' }}</option>@foreach($page->get('contact.services',[]) as $service)<option>{{ $l($service) }}</option>@endforeach</select><span class="field-error"></span></div><div class="field"><label for="project-details">{{ $locale === 'ar' ? 'نبذة عن المشروع' : 'Project brief' }}</label><textarea id="project-details" name="message" required minlength="12"></textarea><span class="field-error"></span></div><button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> {{ $page->trans('contact.button') }}</button></form></div></div></section>
+    @if($page->get('headings.blog.visible', true))
+        <section class="content-section" id="blog">
+            <div class="section-inner">
+                <x-site.section-head :data="$page->get('headings.blog')" :locale="$locale"/>
+                <div class="blog-grid">
+                    @foreach($page->items('blog') as $post)
+                        <article class="blog-card reveal">
+                            <figure class="blog-card-media">
+                                <img src="{{ $page->media($post['image']) }}" alt="{{ $l($post['title']) }}" loading="eager" decoding="async">
+                                <span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            </figure>
+                            <div class="blog-card-body">
+                                <h3>{{ $l($post['title']) }}</h3>
+                                <p>{{ $l($post['description']) }}</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <section class="content-section" id="contact"><div class="section-inner"><div class="contact-panel reveal"><div class="contact-note"><div><span class="kicker">{{ $page->trans('contact.kicker') }}</span><h2>{{ $page->trans('contact.title') }}</h2><p>{{ $page->trans('contact.description') }}</p></div><div class="contact-links">@foreach($page->get('contact.links',[]) as $link)<a href="{{ $link['url'] }}" target="_blank" rel="noopener"><i class="{{ $link['icon'] }}"></i><span>{{ $l($link['label']) }}</span></a>@endforeach</div><div class="hero-actions"><a class="btn" href="#top"><i class="fa-solid fa-arrow-up"></i> {{ $locale === 'ar' ? 'العودة للأعلى' : 'Back to top' }}</a></div></div><form class="project-form" action="{{ route('contact.store') }}" novalidate>@csrf<input type="hidden" name="locale" value="{{ $locale }}"><input type="hidden" name="form_started" value="{{ now()->timestamp }}"><input class="hp-field" name="website" tabindex="-1" autocomplete="off"><div class="form-message" role="status"><i class="fa-solid fa-check"></i><span><strong></strong></span></div><div class="field"><label for="client-name">{{ $locale === 'ar' ? 'الاسم الكامل' : 'Full name' }}</label><input id="client-name" name="name" type="text" required minlength="3"><span class="field-error"></span></div><div class="field"><label for="client-email">{{ $locale === 'ar' ? 'البريد الإلكتروني' : 'Email address' }}</label><input id="client-email" name="email" type="email" required><span class="field-error"></span></div><div class="field"><label for="consultation-date">{{ $locale === 'ar' ? 'موعد الاستشارة المقترح' : 'Preferred consultation date' }}</label><input id="consultation-date" name="consultation_date" type="date"><span class="field-error"></span></div><div class="field"><label for="service-type">{{ $locale === 'ar' ? 'نوع الخدمة' : 'Service' }}</label><select id="service-type" name="service" required><option value="">{{ $locale === 'ar' ? 'اختر الخدمة' : 'Choose a service' }}</option>@foreach($page->get('contact.services',[]) as $service)<option>{{ $l($service) }}</option>@endforeach</select><span class="field-error"></span></div><div class="field"><label for="project-details">{{ $locale === 'ar' ? 'نبذة عن المشروع' : 'Project brief' }}</label><textarea id="project-details" name="message" required minlength="12"></textarea><span class="field-error"></span></div><button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> {{ $page->trans('contact.button') }}</button></form></div></div></section>
 </div>
 <div class="lightbox" id="image-lightbox" aria-hidden="true"><button class="lightbox-close" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button><img src="" alt=""></div>
 </body></html>
