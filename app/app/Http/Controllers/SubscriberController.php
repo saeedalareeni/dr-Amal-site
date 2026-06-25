@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class SubscriberController extends Controller
@@ -21,6 +22,10 @@ class SubscriberController extends Controller
             'website' => ['nullable', 'max:0'],
             'form_started' => ['required', 'integer'],
         ]);
+
+        if (now()->timestamp - (int) $data['form_started'] < 2) {
+            throw ValidationException::withMessages(['email' => 'تعذر التحقق من الإرسال.']);
+        }
 
         $subscriber = Subscriber::firstOrNew(['email' => strtolower($data['email'])]);
         if ($subscriber->status === 'verified') {
